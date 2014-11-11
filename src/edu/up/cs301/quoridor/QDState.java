@@ -1,6 +1,7 @@
 package edu.up.cs301.quoridor;
 
 import android.graphics.Point;
+import edu.up.cs301.game.GamePlayer;
 import edu.up.cs301.game.infoMsg.GameState;
 
 
@@ -33,11 +34,23 @@ public class QDState extends GameState
     
     // an int that tells whose move it is
     private int playerToMove;
+    
+    // players
+    private GamePlayer[] players;
+    
+    // Constants
+    private static final int LEFT = 0;
+    private static final int RIGHT = 1;
+    private static final int UP = 2;
+    private static final int DOWN = 3;
+    private static final int VERTICAL = 4;
+    private static final int HORIZONTAL = 5;
+    
 
     /**
      * Constructor for objects of class QDState
      */
-    public QDState()
+    public QDState(int players)
     {
         // initialize the state to be a brand new game
 //        board = new char[3][3];
@@ -47,7 +60,7 @@ public class QDState extends GameState
 //        	}
 //        }
     	
-    	pawns = new Point[4];
+    	pawns = new Point[players];
     	
     	wallLoc = new int[9][9];
     	
@@ -90,7 +103,7 @@ public class QDState extends GameState
      * @return
      */
     public Point[] getPawns() {
-    	return null;
+    	return pawns;
     }
 
     /**
@@ -98,7 +111,7 @@ public class QDState extends GameState
      * @return
      */
     public int[][] getWallsLoc() {
-    	return null;
+    	return wallLoc;
     }
     
     /**
@@ -117,5 +130,37 @@ public class QDState extends GameState
      */
     public void setWhoseMove(int id) {
     	playerToMove = id;
+    }
+    
+    public boolean isWalled(int x, int y, int dir) {
+    	return false;
+    }
+    
+    public boolean intersectIsWalled(int x, int y) {
+    	return false;
+    }
+    
+    public int getCurrTurn() {
+    	return 0;
+    }
+    
+    public void movePawn(int p, int x, int y) {
+    	return;
+    }
+    
+    public void placeWall(int p, int x, int y, int dir) {
+    	return;
+    }
+    
+    public void nextTurn() {
+    	return;
+    }
+    
+    public String encode() {
+    	return null;
+    }
+    
+    public QDState makeCopy() {
+    	return this;
     }
 }
