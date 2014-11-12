@@ -15,7 +15,7 @@ import android.graphics.Point;
  * @version July 2013
  * 
  */
-public class TTTComputerPlayer2 extends TTTComputerPlayer
+public class QDComputerPlayer2 extends TTTComputerPlayer
 {
 	/**
 	 * constructor for a computer player
@@ -23,7 +23,7 @@ public class TTTComputerPlayer2 extends TTTComputerPlayer
 	 * @param name
 	 * 		the player's name
 	 */
-	public TTTComputerPlayer2(String name) {
+	public QDComputerPlayer2(String name) {
 		// invoke superclass constructor
 		super(name);
 	}// constructor
