@@ -1,5 +1,7 @@
 package edu.up.cs301.quoridor;
 
+//import cs301.sqaurespuzzle.Board;
+//import cs301.sqaurespuzzle.MainActivity;
 import android.app.Activity;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -27,7 +29,7 @@ import edu.up.cs301.game.infoMsg.NotYourTurnInfo;
  * @author Steven R. Vegdahl
  * @version July 2013
  */
-public class TTTHumanPlayer1 extends TTTHumanPlayer implements Animator {
+public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 
 	// some constants, which are percentages with respect to the minimum
 	// of the height and the width. All drawing will be done in the "middle
@@ -45,6 +47,17 @@ public class TTTHumanPlayer1 extends TTTHumanPlayer implements Animator {
 	private final static float LINE_WIDTH_PERCENT = 3; // width of a tic-tac-toe line
 	private final static float SQUARE_DELTA_PERCENT = SQUARE_SIZE_PERCENT
 			+ LINE_WIDTH_PERCENT; // distance from left (or top) edge of square to the next one
+	
+	//QUORIDOR BOARD VARIABLES
+	public static int boardSize = 9; //get board size from main class input HARD CODE
+	private int margin;//create a margin to be between each piece
+	private int totalBoardSize = 650; //size of the board
+	private int pieceLength; //total board size divided by number of pieces
+	private int pieceSize; //size of each piece of the  board
+	//public static Board model; //get the static board from the main class
+	private Paint paint = new Paint(); //create new pain object
+	private int OPAQUE; //create an invisible color
+	/////////////////////////////////////////////////////////////////////////////
 
 	/*
 	 * Instance variables
@@ -75,7 +88,7 @@ public class TTTHumanPlayer1 extends TTTHumanPlayer implements Animator {
 	 * @param name
 	 * 		the player's name
 	 */
-	public TTTHumanPlayer1(String name) {
+	public QDHumanPlayer1(String name) {
 		super(name);
 	}
 
@@ -190,6 +203,38 @@ public class TTTHumanPlayer1 extends TTTHumanPlayer implements Animator {
 	 */
 	public void tick(Canvas g) {
 
+		//QUORIDOR BOARD
+		//calculating constants	
+				margin = 40/boardSize; //creating the margin based on board size
+				pieceLength = (int)(totalBoardSize/boardSize); //creating piece length based off board size
+				pieceSize = pieceLength+ margin; //create the total piece size
+
+				int i; //iterator
+				int j; //iterator
+				String textVal; //to make a string of the value of piece to print on tile
+
+				for (i=0;i<boardSize;i++){
+					for (j=0; j<boardSize; j++){
+						//create a blank tile in bottom right corner of board
+						
+						//draw in rest of tiles visible
+							//boolean hasWon = MainActivity.model.hasWon();
+							//if (hasWon == true){ //if user has won, paint the squares yellow
+								paint.setColor(Color.YELLOW);
+								g.drawRect(margin+(j*pieceSize), margin+(i*pieceSize), pieceSize+(j*pieceSize), pieceSize+(i*pieceSize), paint);
+
+								//paint.setColor(Color.BLACK);
+								//textVal = String.valueOf(MainActivity.model.getValue(i,j));
+								//g.drawText(textVal,((j*pieceSize)+(pieceSize/2)), ((i*pieceSize)+(pieceSize/2)), paint);
+							}
+							
+						}
+					
+
+				/////////////////////////////////////////////////////////////////////////////
+
+		
+		
 		// if the full square size is outdated our variables that relate
 		// to the dimensions of the animation surface
 		if (fullSquare < 0) {
@@ -197,17 +242,17 @@ public class TTTHumanPlayer1 extends TTTHumanPlayer implements Animator {
 		}
 
 		// paint the TTT-board's horizontal and vertical lines
-		Paint p = new Paint();
-		p.setColor(foregroundColor());
-		for (int i = 0; i <= 1; i++) {
-			float variable1 = BORDER_PERCENT + SQUARE_SIZE_PERCENT
-					+ (i * SQUARE_DELTA_PERCENT);
-			float variable2 = variable1 + LINE_WIDTH_PERCENT;
-			float fixed1 = BORDER_PERCENT;
-			float fixed2 = 100 - BORDER_PERCENT;
-			g.drawRect(h(variable1), v(fixed1), h(variable2), v(fixed2), p);
-			g.drawRect(h(fixed1), v(variable1), h(fixed2), v(variable2), p);
-		}
+//		Paint p = new Paint();
+//		p.setColor(foregroundColor());
+//		for (int i = 0; i <= 1; i++) {
+//			float variable1 = BORDER_PERCENT + SQUARE_SIZE_PERCENT
+//					+ (i * SQUARE_DELTA_PERCENT);
+//			float variable2 = variable1 + LINE_WIDTH_PERCENT;
+//			float fixed1 = BORDER_PERCENT;
+//			float fixed2 = 100 - BORDER_PERCENT;
+//			g.drawRect(h(variable1), v(fixed1), h(variable2), v(fixed2), p);
+//			g.drawRect(h(fixed1), v(variable1), h(fixed2), v(variable2), p);
+//		}
 
 		// if we don't have any state, there's nothing more to draw, so return
 		if (state == null) {
@@ -218,8 +263,8 @@ public class TTTHumanPlayer1 extends TTTHumanPlayer implements Animator {
 		// place on the canvas
 		for (int row = 0; row < 3; row++) {
 			for (int col = 0; col < 3; col++) {
-				char result = state.getPiece(row, col); // get piece
-				drawSymbol(g, result, col, row);
+				//char result = state.getPiece(row, col); // get piece
+				//drawSymbol(g, result, col, row);
 			}
 		}
 	}

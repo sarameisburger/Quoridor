@@ -10,7 +10,11 @@ import edu.up.cs301.game.infoMsg.NotYourTurnInfo;
  * @author Steven R. Vegdahl
  * @versio2 July 2013 
  */
+<<<<<<< HEAD:src/edu/up/cs301/quoridor/QDComputerPlayer1.java
 public class QDComputerPlayer1 extends TTTComputerPlayer
+=======
+public class QDComputerPlayer1 extends QDComputerPlayer
+>>>>>>> origin/master:src/edu/up/cs301/quoridor/QDComputerPlayer1.java
 {
     /*
      * Constructor for the TTTComputerPlayer1 class

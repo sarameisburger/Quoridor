@@ -15,7 +15,11 @@ import android.graphics.Point;
  * @version July 2013
  * 
  */
+<<<<<<< HEAD:src/edu/up/cs301/quoridor/QDComputerPlayer2.java
 public class QDComputerPlayer2 extends TTTComputerPlayer
+=======
+public class QDComputerPlayer2 extends QDComputerPlayer
+>>>>>>> origin/master:src/edu/up/cs301/quoridor/QDComputerPlayer2.java
 {
 	/**
 	 * constructor for a computer player
