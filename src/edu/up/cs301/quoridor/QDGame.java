@@ -8,6 +8,6 @@ import edu.up.cs301.game.Game;
  * @author Steven R. Vegdahl
  * @version 25 July 2002
  */
-public interface TTTGame extends Game
+public interface QDGame extends Game
 {
 }

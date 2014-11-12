@@ -8,7 +8,7 @@ import edu.up.cs301.game.GamePlayer;
  * @author Steven R. Vegdahl 
  * @version 2 July 2001
  */
-public interface TTTPlayer extends GamePlayer
+public interface QDPlayer extends GamePlayer
 {
     // There are no additional methods for those player beyond those in
     // GamePlayer.

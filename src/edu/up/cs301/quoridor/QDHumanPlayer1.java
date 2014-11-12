@@ -29,7 +29,7 @@ import edu.up.cs301.game.infoMsg.NotYourTurnInfo;
  * @author Steven R. Vegdahl
  * @version July 2013
  */
-public class TTTHumanPlayer1 extends TTTHumanPlayer implements Animator {
+public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 
 	// some constants, which are percentages with respect to the minimum
 	// of the height and the width. All drawing will be done in the "middle
@@ -88,7 +88,7 @@ public class TTTHumanPlayer1 extends TTTHumanPlayer implements Animator {
 	 * @param name
 	 * 		the player's name
 	 */
-	public TTTHumanPlayer1(String name) {
+	public QDHumanPlayer1(String name) {
 		super(name);
 	}
 

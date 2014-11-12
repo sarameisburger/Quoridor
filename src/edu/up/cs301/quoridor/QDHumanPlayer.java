@@ -10,13 +10,13 @@ import edu.up.cs301.game.GameHumanPlayer;
  * @version 26 July 2002
  */
 
-public abstract class TTTHumanPlayer extends GameHumanPlayer
-	implements TTTPlayer
+public abstract class QDHumanPlayer extends GameHumanPlayer
+	implements QDPlayer
 {
     /**
      * TTTHumanPlayer constructor.
      */
-    public TTTHumanPlayer(String name) {
+    public QDHumanPlayer(String name) {
         // invoke the superclass constructor
         super(name);
     }

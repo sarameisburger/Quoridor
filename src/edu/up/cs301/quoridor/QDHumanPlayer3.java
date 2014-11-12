@@ -20,7 +20,7 @@ import edu.up.cs301.game.infoMsg.NotYourTurnInfo;
  * @author Steven R. Vegdahl 
  * @version July 2013
  */
-public class TTTHumanPlayer3 extends TTTHumanPlayer implements TTTPlayer, OnClickListener {
+public class QDHumanPlayer3 extends QDHumanPlayer implements QDPlayer, OnClickListener {
 	
 	// the activity under which we're running
 	GameMainActivity myActivity = null;
@@ -34,7 +34,7 @@ public class TTTHumanPlayer3 extends TTTHumanPlayer implements TTTPlayer, OnClic
 	 * @param name
 	 * 		the player's name
 	 */
-	public TTTHumanPlayer3(String name) {
+	public QDHumanPlayer3(String name) {
 		super(name);
 	}
 

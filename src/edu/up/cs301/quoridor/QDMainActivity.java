@@ -30,35 +30,35 @@ public class QDMainActivity extends GameMainActivity {
 		// yellow-on-blue GUI
 		playerTypes.add(new GamePlayerType("Local Human Player (blue-yellow)") {
 			public GamePlayer createPlayer(String name) {
-				return new TTTHumanPlayer1(name);
+				return new QDHumanPlayer1(name);
 			}
 		});
 		
 		// red-on-yellow GUI
 		playerTypes.add(new GamePlayerType("Local Human Player (yellow-red)") {
 			public GamePlayer createPlayer(String name) {
-				return new TTTHumanPlayer2(name);
+				return new QDHumanPlayer2(name);
 			}
 		});
 		
 		// game of 33
 		playerTypes.add(new GamePlayerType("Local Human Player (game of 33)") {
 			public GamePlayer createPlayer(String name) {
-				return new TTTHumanPlayer3(name);
+				return new QDHumanPlayer3(name);
 			}
 		});
 		
 		// dumb computer player
 		playerTypes.add(new GamePlayerType("Computer Player (dumb)") {
 			public GamePlayer createPlayer(String name) {
-				return new TTTComputerPlayer1(name);
+				return new QDComputerPlayer1(name);
 			}
 		});
 		
 		// smarter computer player
 		playerTypes.add(new GamePlayerType("Computer Player (smart)") {
 			public GamePlayer createPlayer(String name) {
-				return new TTTComputerPlayer2(name);
+				return new QDComputerPlayer2(name);
 			}
 		});
 
@@ -88,7 +88,7 @@ public class QDMainActivity extends GameMainActivity {
 	 */
 	@Override
 	public LocalGame createLocalGame() {
-		return new TTTLocalGame();
+		return new QDLocalGame();
 	}
 
 }

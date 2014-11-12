@@ -10,12 +10,12 @@ import edu.up.cs301.game.infoMsg.NotYourTurnInfo;
  * @author Steven R. Vegdahl
  * @versio2 July 2013 
  */
-public class TTTComputerPlayer1 extends TTTComputerPlayer
+public class QDComputerPlayer1 extends QDComputerPlayer
 {
     /*
      * Constructor for the TTTComputerPlayer1 class
      */
-    public TTTComputerPlayer1(String name) {
+    public QDComputerPlayer1(String name) {
         // invoke superclass constructor
         super(name); // invoke superclass constructor
     }

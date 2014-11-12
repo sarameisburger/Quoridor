@@ -10,8 +10,8 @@ import edu.up.cs301.game.GameComputerPlayer;
  * @version July 2013
  */
 
-public abstract class TTTComputerPlayer extends GameComputerPlayer
-    implements TTTPlayer {
+public abstract class QDComputerPlayer extends GameComputerPlayer
+    implements QDPlayer {
     /**
      * instance variable that tells which piece am I playing ('X' or 'O').
      * This is set once the player finds out which player they are, in the
@@ -22,7 +22,7 @@ public abstract class TTTComputerPlayer extends GameComputerPlayer
     /**
      * Constructor for objects of class TTTComputerPlayer
      */
-    public TTTComputerPlayer(String name) {
+    public QDComputerPlayer(String name) {
         // invoke superclass constructor
         super(name);
     }// constructor

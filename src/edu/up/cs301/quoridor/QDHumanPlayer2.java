@@ -13,7 +13,7 @@ import android.graphics.Point;
  * @author Steven R. Vegdahl 
  * @version July 2013
  */
-public class TTTHumanPlayer2 extends TTTHumanPlayer1
+public class QDHumanPlayer2 extends QDHumanPlayer1
 {
     /**
      * TTTHumanPlayer constructor.
@@ -21,7 +21,7 @@ public class TTTHumanPlayer2 extends TTTHumanPlayer1
      * @param name
      * 		the player's name
      */
-    public TTTHumanPlayer2(String name) {
+    public QDHumanPlayer2(String name) {
         // invoke the superclass constructor
         super(name);
     }
