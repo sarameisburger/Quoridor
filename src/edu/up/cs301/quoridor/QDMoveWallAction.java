@@ -15,9 +15,8 @@ public class QDMoveWallAction extends GameAction
 	private static final long serialVersionUID = -2242980258970485343L;
 	
 	// instance variables: the selected row and column
-    private int x;
-    private int y;
-    private int ori; 
+    private int row;
+    private int col;
 
     /**
      * Constructor for TTTMoveAction
@@ -26,15 +25,14 @@ public class QDMoveWallAction extends GameAction
      * @param row the row of the square selected (0-2)
      * @param col the column of the square selected
      */
-    public QDMoveWallAction(GamePlayer player, int xVal, int yVal, int oriVal)
+    public QDMoveWallAction(GamePlayer player, int row, int col)
     {
         // invoke superclass constructor to set the player
         super(player);
 
         // set the row and column as passed to us
-        this.x = xVal; 
-        this.y = yVal; 
-        this.ori = oriVal; 
+        this.row = Math.max(0, Math.min(2, row));
+        this.col = Math.max(0, Math.min(2, col));
     }
 
     /**
@@ -42,14 +40,13 @@ public class QDMoveWallAction extends GameAction
      *
      * @return the row selected
      */
-    public int getX() { return x; }
+    public int getRow() { return row; }
 
     /**
      * get the object's column
      *
      * @return the column selected
      */
-    public int getY() { return y; }
+    public int getCol() { return col; }
 
-    public int getOri() {return ori;}
 }

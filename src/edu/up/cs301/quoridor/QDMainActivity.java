@@ -41,21 +41,28 @@ public class QDMainActivity extends GameMainActivity {
 			}
 		});
 		
+		// game of 33
+		playerTypes.add(new GamePlayerType("Local Human Player (game of 33)") {
+			public GamePlayer createPlayer(String name) {
+				return new TTTHumanPlayer3(name);
+			}
+		});
+		
 		// dumb computer player
 		playerTypes.add(new GamePlayerType("Computer Player (dumb)") {
 			public GamePlayer createPlayer(String name) {
-				return new QDComputerPlayer1(name);
+				return new TTTComputerPlayer1(name);
 			}
 		});
 		
 		// smarter computer player
-		playerTypes.add(new GamePlayerType("Computer Player (less dumb)") {
+		playerTypes.add(new GamePlayerType("Computer Player (smart)") {
 			public GamePlayer createPlayer(String name) {
-				return new QDComputerPlayer2(name);
+				return new TTTComputerPlayer2(name);
 			}
 		});
 
-		// Create a game configuration class for Quoridor
+		// Create a game configuration class for Tic-tac-toe
 		GameConfig defaultConfig = new GameConfig(playerTypes, 2, 4, "Quoridor", PORT_NUMBER);
 
 		// Add the default players
