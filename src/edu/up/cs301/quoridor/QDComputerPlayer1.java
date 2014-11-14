@@ -37,6 +37,19 @@ public class QDComputerPlayer1 extends QDComputerPlayer
     	// if it was a "not your turn" message, just ignore it
     	if (info instanceof NotYourTurnInfo) return;
     	
+    	int piece;
+    	//decide pawn or wall
+    	int val = (int)(Math.random()*2);
+    	if(val==0){piece = 0;}//wall
+    	else{piece = 1;}//pawn
+    	//get pawn or wall then decide on location
+    	if(piece==0){
+    		int x = (int)(Math.random()*9);
+    		int y = (int)(Math.random()*9);
+    		game.sendAction(new QDMoveWallAction(this, x,y));
+    	}
+    		
+    	
     	// pick x and y positions at random (0-2)
     	int xVal = (int)(3*Math.random());
     	int yVal = (int)(3*Math.random());
@@ -52,4 +65,6 @@ public class QDComputerPlayer1 extends QDComputerPlayer
     	game.sendAction(new QDMovePawnAction(this, yVal, xVal));
     	
     }
-}
+    	
+    	}
+
