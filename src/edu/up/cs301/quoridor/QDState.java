@@ -21,7 +21,7 @@ public class QDState extends GameState
     // ************** instance variables ************
     ///////////////////////////////////////////////////
 	
-	private char[][] board;
+//	private char[][] board;
     
     // the coordinates of the pawns
     private Point[] pawns;
@@ -39,29 +39,40 @@ public class QDState extends GameState
     private GamePlayer[] players;
     
     // Constants
-    private static final int LEFT = 0;
-    private static final int RIGHT = 1;
-    private static final int UP = 2;
-    private static final int DOWN = 3;
-    private static final int VERTICAL = 4;
-    private static final int HORIZONTAL = 5;
+    private static final int EMPTY = 0;
+    private static final int LEFT = 1;
+    private static final int RIGHT = 2;
+    private static final int UP = 4;
+    private static final int DOWN = 8;
+    private static final int VERTICAL = 16;
+    private static final int HORIZONTAL = 32;
     
 
     /**
      * Constructor for objects of class QDState
      */
     public QDState(int players)
-    {
-        // initialize the state to be a brand new game
-//        board = new char[3][3];
-//        for (int i = 0; i < 3; i++) {
-//        	for (int j = 0; j < 3; j++) {
-//        		board[i][j] = ' ';
-//        	}
-//        }
-    	
+    {	
     	pawns = new Point[players];
+    	wallRem = new int[players];
     	
+    	if (pawns.length >= 2) {
+    		pawns[0] = new Point(4,8);
+    		pawns[1] = new Point(4,0);
+    		wallRem[0] = 10;
+    		wallRem[1] = 10;
+    	}
+    	if (pawns.length == 4) {
+    		pawns[2] = new Point(0,4);
+    		pawns[3] = new Point(8,4);
+    		for (int i=0; i < wallRem.length; i++) {
+    			wallRem[i] = 5;
+    		}
+    	}
+    	
+    	// QD TODO: pawns based on number of players
+//    	players[players] = new GamePlayer();
+    	// QD TODO: initialize empty wall array
     	wallLoc = new int[9][9];
     	
     	for (int i = 0; i < wallLoc.length; i++) {
@@ -69,9 +80,6 @@ public class QDState extends GameState
     			wallLoc[i][j] = 0;
     		}
     	}
-    	
-    	// QD TODO: pawns based on number of players
-    	// QD TODO: initialize empty wall array
         
         // make it player 0's move
         playerToMove = 0;
@@ -85,14 +93,17 @@ public class QDState extends GameState
      */
     public QDState(QDState original)
     {
-    	// create a new 3x3 array, and copy the values from
+    	pawns = original.pawns;
+    	
+    	wallRem = original.wallRem;
+    	// create a new wall array, and copy the values from
     	// the original
-//    	board = new char[3][3];
-//    	for (int i = 0; i < 3; i++) {
-//    		for (int j = 0; j < 3; j++) {
-//    			board[i][j] = original.board[i][j];
-//    		}
-//    	}
+    	wallLoc = new int[9][9];
+    	for (int i = 0; i < wallLoc.length; i++) {
+    		for (int j = 0; j < wallLoc.length; j++) {
+    			wallLoc[i][j] = original.wallLoc[i][j];
+    		}
+    	}
     	
     	// copy the player-to-move information
         playerToMove = original.playerToMove;
