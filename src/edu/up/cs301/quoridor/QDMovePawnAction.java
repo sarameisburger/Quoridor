@@ -15,24 +15,24 @@ public class QDMovePawnAction extends GameAction
 	private static final long serialVersionUID = -2242980258970485343L;
 	
 	// instance variables: the selected row and column
-    private int x;
-    private int y;
+    private int row;
+    private int col;
 
     /**
-     * Constructor for QDMoveAction
+     * Constructor for TTTMoveAction
      *
      * @param source the player making the move
      * @param row the row of the square selected (0-2)
      * @param col the column of the square selected
      */
-    public QDMovePawnAction(GamePlayer player, int xVal, int yVal)
+    public QDMovePawnAction(GamePlayer player, int row, int col)
     {
         // invoke superclass constructor to set the player
         super(player);
 
         // set the row and column as passed to us
-        this.x = xVal; //= Math.max(0, Math.min(2, row));
-        this.y = yVal;  //= Math.max(0, Math.min(2, col));
+        this.row = Math.max(0, Math.min(2, row));
+        this.col = Math.max(0, Math.min(2, col));
     }
 
     /**
@@ -40,13 +40,13 @@ public class QDMovePawnAction extends GameAction
      *
      * @return the row selected
      */
-    public int getX() { return x; }
+    public int getRow() { return row; }
 
     /**
      * get the object's column
      *
      * @return the column selected
      */
-    public int getY() { return y; }
+    public int getCol() { return col; }
 
 }

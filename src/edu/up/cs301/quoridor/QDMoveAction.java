@@ -2,9 +2,6 @@ package edu.up.cs301.quoridor;
 
 public abstract class QDMoveAction {
 
-	/*
-	 * QDMoveAction Constructor 
-	 */
 	public QDMoveAction(){
 		
 	}
@@ -17,5 +14,3 @@ public abstract class QDMoveAction {
 		return false; 
 	}
 }
-
-//class QDMoveAction 

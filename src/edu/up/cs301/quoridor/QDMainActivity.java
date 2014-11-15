@@ -30,14 +30,21 @@ public class QDMainActivity extends GameMainActivity {
 		// yellow-on-blue GUI
 		playerTypes.add(new GamePlayerType("Local Human Player (blue-yellow)") {
 			public GamePlayer createPlayer(String name) {
-				return new TTTHumanPlayer1(name);
+				return new QDHumanPlayer1(name);
 			}
 		});
 		
 		// red-on-yellow GUI
 		playerTypes.add(new GamePlayerType("Local Human Player (yellow-red)") {
 			public GamePlayer createPlayer(String name) {
-				return new TTTHumanPlayer2(name);
+				return new QDHumanPlayer2(name);
+			}
+		});
+		
+		// game of 33
+		playerTypes.add(new GamePlayerType("Local Human Player (game of 33)") {
+			public GamePlayer createPlayer(String name) {
+				return new QDHumanPlayer3(name);
 			}
 		});
 		
@@ -49,13 +56,13 @@ public class QDMainActivity extends GameMainActivity {
 		});
 		
 		// smarter computer player
-		playerTypes.add(new GamePlayerType("Computer Player (less dumb)") {
+		playerTypes.add(new GamePlayerType("Computer Player (smart)") {
 			public GamePlayer createPlayer(String name) {
-				return new QDComputerPlayer2(name);
+				return new QDComputerPlayer1(name);
 			}
 		});
 
-		// Create a game configuration class for Quoridor
+		// Create a game configuration class for Tic-tac-toe
 		GameConfig defaultConfig = new GameConfig(playerTypes, 2, 4, "Quoridor", PORT_NUMBER);
 
 		// Add the default players
@@ -81,7 +88,7 @@ public class QDMainActivity extends GameMainActivity {
 	 */
 	@Override
 	public LocalGame createLocalGame() {
-		return new TTTLocalGame();
+		return new QDLocalGame();
 	}
 
 }

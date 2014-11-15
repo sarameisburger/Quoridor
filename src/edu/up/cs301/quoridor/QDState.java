@@ -56,6 +56,7 @@ public class QDState extends GameState
     	pawns = new Point[players];
     	wallRem = new int[players];
     	
+    	// Initialize pawns
     	if (pawns.length >= 2) {
     		pawns[0] = new Point(4,8);
     		pawns[1] = new Point(4,0);
@@ -152,14 +153,25 @@ public class QDState extends GameState
     }
     
     public int getCurrTurn() {
-    	return 0;
+    	return playerToMove;
     }
     
     public void movePawn(int p, int x, int y) {
+    	if (p > pawns.length || x > 9 || y > 9) { return; }
+    	pawns[p] = new Point(x,y);
     	return;
     }
     
     public void placeWall(int p, int x, int y, int dir) {
+    	// guard
+    	
+    	if (intersectIsWalled(x, y)) { return; }
+    	
+    	if (dir == HORIZONTAL) {
+    		wallLoc[y][x] |= RIGHT;
+    		wallLoc[y][x+1] |= LEFT;
+    		wallLoc
+    	}
     	return;
     }
     
