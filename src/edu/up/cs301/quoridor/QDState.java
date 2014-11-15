@@ -145,10 +145,65 @@ public class QDState extends GameState
     }
     
     public boolean isWalled(int x, int y, int dir) {
-    	return false;
+    	return (wallLoc[y][x] & dir) == dir; 
+//    	return false;
     }
     
     public boolean intersectIsWalled(int x, int y) {
+    	boolean walled = true;
+    	int walledSides = 0;
+    	
+    	// Check if there are any walls at all
+    	if (wallLoc[y][x] == 0
+    			&& wallLoc[y+1][x] == 0
+    			&& wallLoc[y][x+1] == 0
+    			&& wallLoc[y+1][x+1] == 0) {
+    		
+    		return false;
+    	}
+    	
+    	// Check Vertically
+    	if (((wallLoc[y][x] & RIGHT) == RIGHT || (wallLoc[y][x+1] & LEFT) == LEFT)
+    			&& ((wallLoc[y+1][x] & RIGHT) == RIGHT || (wallLoc[y+1][x+1] & LEFT) == LEFT)) {
+    		// There's a wall on top and bottom of intersection
+    		
+    		// If the intersection is at an edge, it must be walled
+    		if (y == 0 || y == wallLoc.length - 1) { return true; }
+    		
+    		// Count walled sides down to zero, if it's an even
+    		// number, then the intersection is open
+    		walledSides = 0;
+    		for (int i = y; i >= 0; i--) {
+    			if ((wallLoc[i][x] & RIGHT) == RIGHT) {
+    				walledSides++;
+    			}
+    		}
+    		
+    		// Odd walled sides means a wall crosses the intersection
+    		return walledSides % 2 != 0;
+    	}
+    	
+    	// Check Horizontally
+    	if (((wallLoc[y][x] & DOWN) == DOWN || (wallLoc[y+1][x] & UP) == UP)
+    			&& ((wallLoc[y][x+1] & DOWN) == DOWN || (wallLoc[y+1][x+1] & UP) == UP)) {
+    		// There's a wall on left and right of intersection
+    		
+    		// If the intersection is at an edge, it must be walled
+    		if (x == 0 || x == wallLoc.length - 1) { return true; }
+    		
+    		// Count walled sides down to zero, if it's an even
+    		// number, then the intersection is open
+    		walledSides = 0;
+    		for (int i = x; i >= 0; i--) {
+    			if ((wallLoc[y][i] & DOWN) == DOWN) {
+    				walledSides++;
+    			}
+    		}
+    		
+    		// Odd walled sides means a wall crosses the intersection
+    		return walledSides % 2 != 0;
+    	}
+    	
     	return false;
     }
     
@@ -167,15 +222,22 @@ public class QDState extends GameState
     	
     	if (intersectIsWalled(x, y)) { return; }
     	
-    	if (dir == HORIZONTAL) {
+    	if (dir == VERTICAL) {
     		wallLoc[y][x] |= RIGHT;
     		wallLoc[y][x+1] |= LEFT;
-    		wallLoc
+    		wallLoc[y+1][x] |= RIGHT;
+    		wallLoc[y+1][x+1] |= LEFT;
+    	} else if (dir == HORIZONTAL) {
+    		wallLoc[y][x] |= DOWN;
+    		wallLoc[y][x+1] |= DOWN;
+    		wallLoc[y+1][x] |= UP;
+    		wallLoc[y+1][x+1] |= UP;
     	}
     	return;
     }
     
     public void nextTurn() {
+    	playerToMove = (playerToMove + 1) % pawns.length;
     	return;
     }
     
