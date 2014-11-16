@@ -39,13 +39,13 @@ public class QDState extends GameState
     private GamePlayer[] players;
     
     // Constants
-    private static final int EMPTY = 0;
-    private static final int LEFT = 1;
-    private static final int RIGHT = 2;
-    private static final int UP = 4;
-    private static final int DOWN = 8;
-    private static final int VERTICAL = 16;
-    private static final int HORIZONTAL = 32;
+    public static final int EMPTY = 0;
+    public static final int LEFT = 1;
+    public static final int RIGHT = 2;
+    public static final int UP = 4;
+    public static final int DOWN = 8;
+    public static final int VERTICAL = 16;
+    public static final int HORIZONTAL = 32;
     
 
     /**
@@ -116,6 +116,10 @@ public class QDState extends GameState
      */
     public Point[] getPawns() {
     	return pawns;
+    }
+    
+    public int[] getWallsRem() {
+    	return wallRem;
     }
 
     /**
@@ -211,36 +215,53 @@ public class QDState extends GameState
     	return playerToMove;
     }
     
-    public void movePawn(int p, int x, int y) {
-    	if (p > pawns.length || x > 9 || y > 9) { return; }
+    public boolean movePawn(int p, int x, int y) {
+    	if (p > pawns.length || x > 9 || y > 9 || x < 0 || y < 0) { return false; }
     	pawns[p] = new Point(x,y);
-    	return;
+    	return true;
     }
     
-    public void placeWall(int p, int x, int y, int dir) {
+    public boolean placeWall(int p, int x, int y, int dir) {
     	// guard
     	
+    	// Stuff LocalGame should check, but we can double check
     	if (intersectIsWalled(x, y)
     			|| p >= wallRem.length
     			|| wallRem[p] == 0) {
-    		return;
+    		return false;
     	}
     	
-    	if (dir == VERTICAL) {
-    		wallLoc[y][x] |= RIGHT;
-    		wallLoc[y][x+1] |= LEFT;
-    		wallLoc[y+1][x] |= RIGHT;
-    		wallLoc[y+1][x+1] |= LEFT;
-    	} else if (dir == HORIZONTAL) {
-    		wallLoc[y][x] |= DOWN;
-    		wallLoc[y][x+1] |= DOWN;
-    		wallLoc[y+1][x] |= UP;
-    		wallLoc[y+1][x+1] |= UP;
-    	}
+        if (dir == VERTICAL) {
+        	// Double check a wall isn't already there
+            if ((wallLoc[y][x] & RIGHT) == RIGHT
+                    || (wallLoc[y][x+1] & LEFT) == LEFT
+                    || (wallLoc[y+1][x] & RIGHT) == RIGHT
+                    || (wallLoc[y+1][x+1] & LEFT) == LEFT) {
+                return false;
+            }
+            
+            wallLoc[y][x] |= RIGHT;
+            wallLoc[y][x+1] |= LEFT;
+            wallLoc[y+1][x] |= RIGHT;
+            wallLoc[y+1][x+1] |= LEFT;
+        } else if (dir == HORIZONTAL) {
+        	// Double check a wall isn't already there
+            if ((wallLoc[y][x] & DOWN) == DOWN
+                    || (wallLoc[y][x+1] & DOWN) == DOWN
+                    || (wallLoc[y+1][x] & UP) == UP
+                    || (wallLoc[y+1][x+1] & UP) == UP) {
+                return false;
+            }
+            
+            wallLoc[y][x] |= DOWN;
+            wallLoc[y][x+1] |= DOWN;
+            wallLoc[y+1][x] |= UP;
+            wallLoc[y+1][x+1] |= UP;
+        }
     	
     	wallRem[p]--;
     	
-    	return;
+    	return true;
     }
     
     public void nextTurn() {
