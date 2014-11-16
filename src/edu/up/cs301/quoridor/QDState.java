@@ -220,7 +220,11 @@ public class QDState extends GameState
     public void placeWall(int p, int x, int y, int dir) {
     	// guard
     	
-    	if (intersectIsWalled(x, y)) { return; }
+    	if (intersectIsWalled(x, y)
+    			|| p >= wallRem.length
+    			|| wallRem[p] == 0) {
+    		return;
+    	}
     	
     	if (dir == VERTICAL) {
     		wallLoc[y][x] |= RIGHT;
@@ -233,6 +237,9 @@ public class QDState extends GameState
     		wallLoc[y+1][x] |= UP;
     		wallLoc[y+1][x+1] |= UP;
     	}
+    	
+    	wallRem[p]--;
+    	
     	return;
     }
     
