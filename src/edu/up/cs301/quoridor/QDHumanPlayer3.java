@@ -286,7 +286,7 @@ public class QDHumanPlayer3 extends QDHumanPlayer implements QDPlayer, OnClickLi
     	// find the value of the piece (X, O or blank) by mapping
     	// the button number to the tic-tac-toe coordinate
     	int[] coord = mapNumberToCoord(buttonNumber);
-    	char piece = state.getPiece(coord[0], coord[1]);
+    	//char piece = state.getPiece(coord[0], coord[1]);
     	
     	// get the value of my piece and of my opponent's piece,
     	// based on whether I am player 0 or player 1
@@ -307,37 +307,37 @@ public class QDHumanPlayer3 extends QDHumanPlayer implements QDPlayer, OnClickLi
     	// otherwise
     	// - center the button vertically on the screen
     	// - set the button to black-on-gray
-    	if (piece == myPiece) {
-    		// give the padding above the weight 1, and the
-    		// padding above the weight 0, which pushes the
-    		// button down on the screen
-    		paddings[0].setLayoutParams(pad1);
-    		paddings[1].setLayoutParams(pad0);
-    		// set the button's text and background colors
-    		button.setBackgroundColor(Color.BLUE);
-    		button.setTextColor(Color.WHITE);
+//    	if (piece == myPiece) {
+//    		// give the padding above the weight 1, and the
+//    		// padding above the weight 0, which pushes the
+//    		// button down on the screen
+//    		paddings[0].setLayoutParams(pad1);
+//    		paddings[1].setLayoutParams(pad0);
+//    		// set the button's text and background colors
+//    		button.setBackgroundColor(Color.BLUE);
+//    		button.setTextColor(Color.WHITE);
+//    	}
+//    	else if (piece == oppPiece) {
+//    		// give the padding above the weight 1, and the
+//    		// padding above the weight 0, which pushes the
+//    		// button down on the screen
+//    		paddings[0].setLayoutParams(pad0);
+//    		paddings[1].setLayoutParams(pad1);
+//    		// set the button's text and background colors
+//    		button.setBackgroundColor(Color.RED);
+//    		button.setTextColor(Color.WHITE);
+//    	}
+//    	else {
+//    		// set both the above and below padding-weights
+//    		// to 1, which will center the button vertically
+//    		paddings[0].setLayoutParams(pad1);
+//    		paddings[1].setLayoutParams(pad1);
+//    		// set the button's text and background colors
+//    		button.setBackgroundColor(Color.GRAY);
+//    		button.setTextColor(Color.BLACK);
     	}
-    	else if (piece == oppPiece) {
-    		// give the padding above the weight 1, and the
-    		// padding above the weight 0, which pushes the
-    		// button down on the screen
-    		paddings[0].setLayoutParams(pad0);
-    		paddings[1].setLayoutParams(pad1);
-    		// set the button's text and background colors
-    		button.setBackgroundColor(Color.RED);
-    		button.setTextColor(Color.WHITE);
-    	}
-    	else {
-    		// set both the above and below padding-weights
-    		// to 1, which will center the button vertically
-    		paddings[0].setLayoutParams(pad1);
-    		paddings[1].setLayoutParams(pad1);
-    		// set the button's text and background colors
-    		button.setBackgroundColor(Color.GRAY);
-    		button.setTextColor(Color.BLACK);
-    	}
-    	button.setEnabled(state.getWhoseMove() == playerNum);
-    }
+    	//button.setEnabled(state.getWhoseMove() == playerNum);
+    //}
     
     /**
      * gets player-number that has selected the corresponding number
@@ -363,7 +363,8 @@ public class QDHumanPlayer3 extends QDHumanPlayer implements QDPlayer, OnClickLi
     	}
     	
     	// return 0 if the piece is an 'X', 1 if the piece is an 'O'; otherwise -1
-    	return "XO".indexOf(state.getPiece(coord[0], coord[1]));
+    	//return "XO".indexOf(state.getPiece(coord[0], coord[1]));
+    	return 1;
     	
     }
     

@@ -170,7 +170,7 @@ public class QDState extends GameState
     	if (dir == HORIZONTAL) {
     		wallLoc[y][x] |= RIGHT;
     		wallLoc[y][x+1] |= LEFT;
-    		wallLoc
+    		//wallLoc
     	}
     	return;
     }
