@@ -34,7 +34,7 @@ public class QDLocalGame extends LocalGame implements QDGame {
 		super();
 
 		// create a new, unfilled-in TTTState object
-		state = new QDState();
+		state = new QDState(2);
 	}
 
 	/**
@@ -64,19 +64,19 @@ public class QDLocalGame extends LocalGame implements QDGame {
 		// to all three lines in the current group
 		for (int i = 0; i < 3; i++) {
 			// get the initial character in each line
-			char rowToken = state.getPiece(i,0);
-			char colToken = state.getPiece(0,i);;
-			char diagToken = state.getPiece(0,i);
-			// determine the direction that the diagonal moves
-			int diagDelta = 1-i;
-			// look for matches for each of the three positions in each
-			// of the current lines; set the corresponding variable to ' '
-			// if a mismatch is found
-			for (int j = 1; j < 3; j++) {
-				if (state.getPiece(i,j) != rowToken) rowToken = ' ';
-				if (state.getPiece(j,i) != colToken) colToken = ' ';
-				if (state.getPiece(j, i+(diagDelta*j)) != diagToken) diagToken = ' ';
-			}
+//			char rowToken = state.getPiece(i,0);
+//			char colToken = state.getPiece(0,i);;
+//			char diagToken = state.getPiece(0,i);
+//			// determine the direction that the diagonal moves
+//			int diagDelta = 1-i;
+//			// look for matches for each of the three positions in each
+//			// of the current lines; set the corresponding variable to ' '
+//			// if a mismatch is found
+//			for (int j = 1; j < 3; j++) {
+//				if (state.getPiece(i,j) != rowToken) rowToken = ' ';
+//				if (state.getPiece(j,i) != colToken) colToken = ' ';
+//				if (state.getPiece(j, i+(diagDelta*j)) != diagToken) diagToken = ' ';
+//			}
 
 			////////////////////////////////////////////////////////////
 			// At this point, if any of our three variables is non-blank
@@ -85,9 +85,9 @@ public class QDLocalGame extends LocalGame implements QDGame {
 
 			// if we find a winner, indicate such by setting 'resultChar'
 			// to the winning mark.
-			if (rowToken != ' ') resultChar = rowToken;
-			else if (colToken != ' ') resultChar = colToken;
-			else if (diagToken != ' ') resultChar = diagToken;
+//			if (rowToken != ' ') resultChar = rowToken;
+//			else if (colToken != ' ') resultChar = colToken;
+//			else if (diagToken != ' ') resultChar = diagToken;
 		}
 
 		// if resultChar is blank, we found no winner, so return null,
@@ -157,15 +157,15 @@ public class QDLocalGame extends LocalGame implements QDGame {
 		int playerId = getPlayerIdx(tm.getPlayer());
 
 		// if that space is not blank, indicate an illegal move
-		if (state.getPiece(row, col) != ' ') {
-			return false;
-		}
+//		if (state.getPiece(row, col) != ' ') {
+//			return false;
+//		}
 
 		// get the 0/1 id of the player whose move it is
 		int whoseMove = state.getWhoseMove();
 
 		// place the player's piece on the selected square
-		state.setPiece(row, col, mark[playerId]);
+//		state.setPiece(row, col, mark[playerId]);
 
 		// make it the other player's turn
 		state.setWhoseMove(1-whoseMove);

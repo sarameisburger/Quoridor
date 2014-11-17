@@ -286,7 +286,8 @@ public class QDHumanPlayer3 extends QDHumanPlayer implements QDPlayer, OnClickLi
     	// find the value of the piece (X, O or blank) by mapping
     	// the button number to the tic-tac-toe coordinate
     	int[] coord = mapNumberToCoord(buttonNumber);
-    	//char piece = state.getPiece(coord[0], coord[1]);
+    	char piece = 'a'; //state.getPiece(coord[0], coord[1]);
+
     	
     	// get the value of my piece and of my opponent's piece,
     	// based on whether I am player 0 or player 1
@@ -363,8 +364,7 @@ public class QDHumanPlayer3 extends QDHumanPlayer implements QDPlayer, OnClickLi
     	}
     	
     	// return 0 if the piece is an 'X', 1 if the piece is an 'O'; otherwise -1
-    	//return "XO".indexOf(state.getPiece(coord[0], coord[1]));
-    	return 1;
+    	return 0; //"XO".indexOf(state.getPiece(coord[0], coord[1]));
     	
     }
     
