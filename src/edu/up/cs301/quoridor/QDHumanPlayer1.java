@@ -57,6 +57,7 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 	//public static Board model; //get the static board from the main class
 	private Paint paint = new Paint(); //create new pain object
 	private int OPAQUE; //create an invisible color
+	private int pawnSize; //size of pawns
 	/////////////////////////////////////////////////////////////////////////////
 
 	/*
@@ -208,27 +209,35 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 				margin = 40/boardSize; //creating the margin based on board size
 				pieceLength = (int)(totalBoardSize/boardSize); //creating piece length based off board size
 				pieceSize = pieceLength+ margin; //create the total piece size
+				pawnSize = (int)(pieceLength/2);
 
 				int i; //iterator
 				int j; //iterator
-				String textVal; //to make a string of the value of piece to print on tile
 
 				for (i=0;i<boardSize;i++){
 					for (j=0; j<boardSize; j++){
-						//create a blank tile in bottom right corner of board
-						
-						//draw in rest of tiles visible
-							//boolean hasWon = MainActivity.model.hasWon();
-							//if (hasWon == true){ //if user has won, paint the squares yellow
-								paint.setColor(Color.YELLOW);
+						//initialize board 
+								paint.setColor(Color.GRAY);
 								g.drawRect(margin+(j*pieceSize), margin+(i*pieceSize), pieceSize+(j*pieceSize), pieceSize+(i*pieceSize), paint);
-
+								
+								//draw pawns on board
+								paint.setColor(Color.MAGENTA);
+								g.drawCircle(margin+(pieceSize), pieceSize+(5*pieceSize), pawnSize, paint);//left side player
+								g.drawCircle(pieceSize+(5*pieceSize), margin+(pieceSize), pawnSize, paint);//upper player
+								g.drawCircle(pieceSize+(5*pieceSize), pieceSize+(9*pieceSize), pawnSize, paint); //bottom player
+								g.drawCircle(pieceSize+(9*pieceSize), pieceSize+(5*pieceSize), pawnSize, paint);//right side player
 								//paint.setColor(Color.BLACK);
 								//textVal = String.valueOf(MainActivity.model.getValue(i,j));
 								//g.drawText(textVal,((j*pieceSize)+(pieceSize/2)), ((i*pieceSize)+(pieceSize/2)), paint);
 							}
 							
 						}
+				//draw pawns on board
+//				paint.setColor(Color.MAGENTA);
+//				g.drawCircle(margin, (totalBoardSize/2), pawnSize, paint);//left side player
+//				g.drawCircle((totalBoardSize/2), (totalBoardSize), pawnSize, paint);//upper player
+//				g.drawCircle((totalBoardSize/2), totalBoardSize, pawnSize, paint); //bottom player
+//				g.drawCircle((totalBoardSize/2), (totalBoardSize/2)+1, pawnSize, paint);//right side player
 					
 
 				/////////////////////////////////////////////////////////////////////////////
