@@ -216,7 +216,7 @@ public class QDState extends GameState
     }
     
     public boolean movePawn(int p, int x, int y) {
-    	if (p > pawns.length || x > 9 || y > 9 || x < 0 || y < 0) { return false; }
+    	if (p >= pawns.length || x >= 9 || y >= 9 || x < 0 || y < 0) { return false; }
     	pawns[p] = new Point(x,y);
     	return true;
     }

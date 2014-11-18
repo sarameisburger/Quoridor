@@ -176,5 +176,43 @@ public class QDLocalGame extends LocalGame implements QDGame {
 		// return true, indicating the it was a legal move
 		return true;
 	}
+	
+	private boolean canPlaceWall(int p, int x, int y, int dir) {
+		// Obvious guards, valid inputs, etc
+		
+		// players
+		if (p < 0 || p >= playerNames.length) { return false; }
+		
+		// X and Y are valid
+		if (y < 0 || y >= state.getWallsLoc().length)    { return false; }
+		if (x < 0 || x >= state.getWallsLoc()[y].length) { return false; }
+		
+		// Valid direction/orientation
+		if (dir != QDState.VERTICAL && dir != QDState.HORIZONTAL) { return false; }
+		
+		// Check if the intersection is occupied, if it is, the move
+		// is illegal
+		if (state.intersectIsWalled(x, y)) { return false; }
+		
+		// Are any of the spaces where the new wall will be already occupied?
+		if (dir == QDState.VERTICAL) {
+			if (state.isWalled(x, y, QDState.RIGHT)
+					|| state.isWalled(x, y+1, QDState.RIGHT)) {
+				return false;
+			}
+		} else if (dir == QDState.HORIZONTAL) {
+			if(state.isWalled(x, y, QDState.DOWN)
+					|| state.isWalled(x+1, y, QDState.DOWN)) {
+				return false;
+			}
+		}
+		
+		// And does the player have any walls remaining?
+		if (state.getWallsRem()[p] == 0) { return false; }
+		
+		// TODO Check for blocking path to goal
+		
+		return false;
+	}
 
 }
