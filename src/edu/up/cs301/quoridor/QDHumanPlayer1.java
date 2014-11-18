@@ -48,7 +48,7 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 	private final static float SQUARE_DELTA_PERCENT = SQUARE_SIZE_PERCENT
 			+ LINE_WIDTH_PERCENT; // distance from left (or top) edge of square to the next one
 	
-	//QUORIDOR BOARD VARIABLES
+	//QUORIDOR BOARD VARIABLE
 	public static int boardSize = 9; //get board size from main class input HARD CODE
 	private int margin;//create a margin to be between each piece
 	private int totalBoardSize = 650; //size of the board
@@ -58,14 +58,17 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 	private Paint paint = new Paint(); //create new pain object
 	private int OPAQUE; //create an invisible color
 	private int pawnSize; //size of pawns
+	
+	// the game's state
+	protected QDState state;
+	private Point[] pawns;
 	/////////////////////////////////////////////////////////////////////////////
 
 	/*
 	 * Instance variables
 	 */
 
-	// the game's state
-	protected QDState state;
+	
 
 	// the current activity
 	private Activity myActivity;
@@ -111,6 +114,7 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 		else {
 			// update our 'state' variable with the new state
 			this.state = (QDState) info;
+			pawns = state.getPawns();
 			Log.i("human player", "receiving");
 		}
 	}
@@ -209,7 +213,13 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 				margin = 40/boardSize; //creating the margin based on board size
 				pieceLength = (int)(totalBoardSize/boardSize); //creating piece length based off board size
 				pieceSize = pieceLength+ margin; //create the total piece size
-				pawnSize = (int)(pieceLength/2);
+				pawnSize = (int)(pieceLength/3);
+				int shift = (int)(pieceSize/2);
+				
+//				pawns = state.getPawns();
+//				if (pawns != null) {
+//					Log.w("HumanPlayer", "Pawn " + pawns[0].x);
+//				}
 
 				int i; //iterator
 				int j; //iterator
@@ -221,17 +231,25 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 								g.drawRect(margin+(j*pieceSize), margin+(i*pieceSize), pieceSize+(j*pieceSize), pieceSize+(i*pieceSize), paint);
 								
 								//draw pawns on board
-								paint.setColor(Color.MAGENTA);
-								g.drawCircle(margin+(pieceSize), pieceSize+(5*pieceSize), pawnSize, paint);//left side player
-								g.drawCircle(pieceSize+(5*pieceSize), margin+(pieceSize), pawnSize, paint);//upper player
-								g.drawCircle(pieceSize+(5*pieceSize), pieceSize+(9*pieceSize), pawnSize, paint); //bottom player
-								g.drawCircle(pieceSize+(9*pieceSize), pieceSize+(5*pieceSize), pawnSize, paint);//right side player
-								//paint.setColor(Color.BLACK);
+								
 								//textVal = String.valueOf(MainActivity.model.getValue(i,j));
 								//g.drawText(textVal,((j*pieceSize)+(pieceSize/2)), ((i*pieceSize)+(pieceSize/2)), paint);
 							}
 							
 						}
+				if (pawns != null){
+					paint.setColor(Color.RED);
+					g.drawCircle(pawns[0].x*(pieceSize)+shift, pawns[0].y*(pieceSize)+shift, pawnSize, paint);//bottom middle
+					//paint.setColor(Color.BLUE);
+					//g.drawCircle(8*(pieceSize)+shift, 4*(pieceSize)+shift, pawnSize, paint);//left
+					paint.setColor(Color.YELLOW);
+					g.drawCircle(pawns[1].x*(pieceSize)+shift, pawns[1].y+shift, pawnSize, paint); //up
+					//paint.setColor(Color.GREEN);
+					//g.drawCircle(shift, 4*(pieceSize)+shift, pawnSize, paint);//right side player
+				}
+				
+				
+				//paint.setColor(Color.BLACK);
 				//draw pawns on board
 //				paint.setColor(Color.MAGENTA);
 //				g.drawCircle(margin, (totalBoardSize/2), pawnSize, paint);//left side player
