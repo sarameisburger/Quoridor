@@ -212,7 +212,7 @@ public class QDLocalGame extends LocalGame implements QDGame {
 		
 		// TODO Check for blocking path to goal
 		
-		return false;
+		return true;
 	}
 
 }
