@@ -238,14 +238,24 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 							
 						}
 				if (pawns != null){
+					if (pawns.length == 2){
 					paint.setColor(Color.RED);
 					g.drawCircle(pawns[0].x*(pieceSize)+shift, pawns[0].y*(pieceSize)+shift, pawnSize, paint);//bottom middle
-					//paint.setColor(Color.BLUE);
-					//g.drawCircle(8*(pieceSize)+shift, 4*(pieceSize)+shift, pawnSize, paint);//left
 					paint.setColor(Color.YELLOW);
 					g.drawCircle(pawns[1].x*(pieceSize)+shift, pawns[1].y+shift, pawnSize, paint); //up
-					//paint.setColor(Color.GREEN);
-					//g.drawCircle(shift, 4*(pieceSize)+shift, pawnSize, paint);//right side player
+					else if(pawns.length == 4){
+						paint.setColor(Color.RED);
+						g.drawCircle(pawns[0].x*(pieceSize)+shift, pawns[0].y*(pieceSize)+shift, pawnSize, paint);//bottom middle
+						paint.setColor(Color.YELLOW);
+						g.drawCircle(pawns[1].x*(pieceSize)+shift, pawns[1].y+shift, pawnSize, paint); //up
+						paint.setColor(Color.GREEN);
+						g.drawCircle(shift, 4*(pieceSize)+shift, pawnSize, paint);//right side player
+						paint.setColor(Color.BLUE);
+						g.drawCircle(8*(pieceSize)+shift, 4*(pieceSize)+shift, pawnSize, paint);//left
+					
+					
+					
+					}
 				}
 				
 				
