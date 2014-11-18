@@ -72,33 +72,41 @@ public class QDComputerPlayer1 extends QDComputerPlayer
 		int piece;
 		//decide pawn or wall
 		int val = (int)(Math.random()*2);
-		if(val==0){piece = 0;}//wall
-		else{piece = 1;}//pawn
+		
+		if(val == 0){
+			piece = 0;
+		}//wall
+		else {
+			piece = 1;
+		}//pawn
+		
 		int x = (int)(Math.random()*9);
 		int y = (int)(Math.random()*9);
 		int counter=0;
 		//get pawn or wall then randomly select location
 
-		//for walls try to randomly place in 5 intersections in both configurations
-		if(piece==0){
-			do{ 
-				x = (int)(Math.random()*9);
-				y = (int)(Math.random()*9);
-
-				//try horizontal then vertical
-				game.sendAction(new QDMoveWallAction(this, x, y, QDState.HORIZONTAL));
-				if(QDMoveWallAction(this, x, y) ==false) {game.sendAction(new QDMoveWallAction(this, x, y, QDState.VERTICAL));}
-				counter++;
-			} while(QDMoveWallAction(this, x, y)==false && counter < 5);
-			//if no legal wall placement is found, move pawn instead
-			if(QDMoveWallAction(this, x, y) == false){piece=1;}
-		}
-		if(piece==1){
-			while(QDMovePawnAction(this,x,y)==false){
-				//get legal moves and randomly pick one to execute
-
-				game.sendAction(new QDMovePawnAction(this, x, y));
-			}
+//		//for walls try to randomly place in 5 intersections in both configurations
+//		if(piece == 0){
+//			do{ 
+//				x = (int)(Math.random()*9);
+//				y = (int)(Math.random()*9);
+//
+//				//try horizontal then vertical
+//				game.sendAction(new QDMoveWallAction(this, x, y, QDState.HORIZONTAL));
+//				if(!QDMoveWallAction(this, x, y)){
+//					game.sendAction(new QDMoveWallAction(this, x, y, QDState.VERTICAL));
+//				}
+//				counter++;
+//			} while(!QDMoveWallAction(this, x, y) && counter < 5);
+//			//if no legal wall placement is found, move pawn instead
+//			if(!QDMoveWallAction(this, x, y)) { piece = 1; }
+//		}
+//		if(piece == 1){
+//			while(!QDMovePawnAction(this,x,y)){
+//				//get legal moves and randomly pick one to execute
+//
+//				game.sendAction(new QDMovePawnAction(this, x, y));
+//			}
 
 
 		}
@@ -119,7 +127,7 @@ public class QDComputerPlayer1 extends QDComputerPlayer
 
 	}
 
-}
+
 //=======
 // Submit our move to the game object. We haven't even checked it it's
 // our turn, or that that position is unoccupied. If it was not our turn,

@@ -150,8 +150,8 @@ public class QDLocalGame extends LocalGame implements QDGame {
 
 		// get the row and column position of the player's move
 		QDMovePawnAction tm = (QDMovePawnAction) action;
-		int row = tm.getRow();
-		int col = tm.getCol();
+		int row = tm.getY();
+		int col = tm.getX();
 
 		// get the 0/1 id of our player
 		int playerId = getPlayerIdx(tm.getPlayer());
