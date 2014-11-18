@@ -68,6 +68,11 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 	//Colors
 	int wallBrown;
 
+	//graphics variables
+	int shift;  //correctional shift to center pieces
+	int wallStartX;  //starting x of all wall stacks
+	int wallStartY; //starting y position of first stack, other stacks y based off this value
+	int wallWidth; //width of a single wall
 	String text0, text1, text2, text3;
 	/////////////////////////////////////////////////////////////////////////////
 
@@ -204,11 +209,11 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 	 * knows what their game-position and opponents' names are.
 	 */
 	protected void initAfterReady() {
-		myActivity.setTitle("Tic-Tac-Toe: "+allPlayerNames[0]+" vs. "+allPlayerNames[1]);
+		myActivity.setTitle("Sara is the best: "+allPlayerNames[0]+" vs. "+allPlayerNames[1]);
 	}
 
 	/**
-	 * callback method, called whenever it's time to draw the next animatio
+	 * callback method, called whenever it's time to draw the next animation
 	 * frame
 	 * 
 	 * @param g
@@ -217,27 +222,23 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 	public void tick(Canvas g) {
 
 		//QUORIDOR BOARD
-		//calculating constants	
+		//calculating variables
 		margin = 40/boardSize; //creating the margin based on board size
 		pieceLength = (int)(totalBoardSize/boardSize); //creating piece length based off board size
 		pieceSize = pieceLength+ margin; //create the total piece size
-		pawnSize = (int)(pieceLength/3);
-		int shift = (int)(pieceSize/2); //correctional shift to center pieces
-		//wallsRemain = state.getWallsRem();
-		int wallStartX = 700;
-		int wallWidth = margin*3;
+		pawnSize = (int)(pieceLength/3); //diameter of pawn
+		shift = (int)(pieceSize/2); //correctional shift to center pieces
+		wallStartX = 700; //starting x of all wall stacks
+		wallStartY = 100; //starting y position of first stack, other stacks y based off this value
+		wallWidth = margin*3;
 
-		int i; //iterator
-		int j; //iterator
+		int i, j; //iterators
 
 		for (i=0;i<boardSize;i++){
 			for (j=0; j<boardSize; j++){
 				//initialize board 
 				paint.setColor(Color.GRAY);
 				g.drawRect(margin+(j*pieceSize), margin+(i*pieceSize), pieceSize+(j*pieceSize), pieceSize+(i*pieceSize), paint);
-
-				//textVal = String.valueOf(MainActivity.model.getValue(i,j));
-				//g.drawText(textVal,((j*pieceSize)+(pieceSize/2)), ((i*pieceSize)+(pieceSize/2)), paint);
 			}
 
 		}
@@ -277,23 +278,30 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 
 			if(pawns.length == 2){
 
-				paint.setTextSize(50); 
+				paint.setTextSize(50); //set font size
 
 				wallBrown = Color.rgb(153, 76, 0);//make walls brown
-				paint.setColor(wallBrown);
+				paint.setColor(wallBrown);//set color to brown
+				
+				//draw 2 stacks of walls
+				g.drawRect(wallStartX, wallStartY, (pieceSize*2)+wallStartX, wallStartY+wallWidth, paint);
+				g.drawRect(wallStartX, 2*wallStartY, (pieceSize*2)+wallStartX, 2*wallStartY+wallWidth, paint);
 
-				g.drawRect(700, 100, (pieceSize*2)+wallStart, 100+wallWidth, paint);	
+				//get each players number of remaining walls	
 				text0 = String.valueOf(wallsRemain[0]);
-
-				paint.setColor(Color.BLACK);
-				g.drawText(text0, 700, 110, paint);
-
-				paint.setColor(wallBrown);
-				g.drawRect(700, 200, (pieceSize*2)+wallStart, 200+wallWidth, paint);
-
 				text1 = String.valueOf(wallsRemain[1]);
+
+				//draw value of walls remaining for each player
 				paint.setColor(Color.BLACK);
-				g.drawText(text1, 700, 210, paint);
+				g.drawText(text0, wallStartX, wallStartY, paint);
+				g.drawText(text1, wallStartX, 2*wallStartY, paint);
+				
+				//write out player name in their pawn color
+				paint.setColor(Color.RED);
+				g.drawText(allPlayerNames[0], wallStartX+pieceSize, wallStartY, paint);
+				
+				paint.setColor(Color.YELLOW);
+				g.drawText(allPlayerNames[1], wallStartX+pieceSize, 2*wallStartY, paint);
 			}
 			else if(pawns.length == 4){
 				
@@ -303,10 +311,10 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 				paint.setColor(wallBrown);//set color to brown
 				
 				//draw 4 stacks of walls
-				g.drawRect(wallStartX, 100, (pieceSize*2)+wallStartX, 100+wallWidth, paint);
-				g.drawRect(wallStartX, 200, (pieceSize*2)+wallStartX, 200+wallWidth, paint);
-				g.drawRect(wallStartX, 300, (pieceSize*2)+wallStartX, 300+wallWidth, paint);
-				g.drawRect(wallStartX, 300, (pieceSize*2)+wallStartX, 300+wallWidth, paint);
+				g.drawRect(wallStartX, wallStartY, (pieceSize*2)+wallStartX, wallStartY+wallWidth, paint);
+				g.drawRect(wallStartX, 2*wallStartY, (pieceSize*2)+wallStartX, 2*wallStartY+wallWidth, paint);
+				g.drawRect(wallStartX, 3*wallStartY, (pieceSize*2)+wallStartX, 3*wallStartY+wallWidth, paint);
+				g.drawRect(wallStartX, 4*wallStartY, (pieceSize*2)+wallStartX, 4*wallStartY+wallWidth, paint);
 
 				//get each players number of remaining walls	
 				text0 = String.valueOf(wallsRemain[0]);
@@ -316,10 +324,23 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 				
 				//draw value of walls remaining for each player
 				paint.setColor(Color.BLACK);
-				g.drawText(text0, wallStartX, 110, paint);
-				g.drawText(text1, wallStartX, 210, paint);
-				g.drawText(text2, wallStartX, 310, paint);
-				g.drawText(text3, wallStartX, 310, paint);
+				g.drawText(text0, wallStartX, wallStartY, paint);
+				g.drawText(text1, wallStartX, 2*wallStartY, paint);
+				g.drawText(text2, wallStartX, 3*wallStartY, paint);
+				g.drawText(text3, wallStartX, 4*wallStartY, paint);
+				
+				//write out player name in their pawn color
+				paint.setColor(Color.RED);
+				g.drawText(allPlayerNames[0], wallStartX+pieceSize, wallStartY, paint);
+				
+				paint.setColor(Color.YELLOW);
+				g.drawText(allPlayerNames[1], wallStartX+pieceSize, 2*wallStartY, paint);
+
+				paint.setColor(Color.GREEN);
+				g.drawText(allPlayerNames[2], wallStartX+pieceSize, 3*wallStartY, paint);
+				
+				paint.setColor(Color.BLUE);
+				g.drawText(allPlayerNames[3], wallStartX+pieceSize, 4*wallStartY, paint);
 			}
 
 
@@ -329,19 +350,6 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 			if (fullSquare < 0) {
 				updateDimensions(g);
 			}
-
-			// paint the TTT-board's horizontal and vertical lines
-			//		Paint p = new Paint();
-			//		p.setColor(foregroundColor());
-			//		for (int i = 0; i <= 1; i++) {
-			//			float variable1 = BORDER_PERCENT + SQUARE_SIZE_PERCENT
-			//					+ (i * SQUARE_DELTA_PERCENT);
-			//			float variable2 = variable1 + LINE_WIDTH_PERCENT;
-			//			float fixed1 = BORDER_PERCENT;
-			//			float fixed2 = 100 - BORDER_PERCENT;
-			//			g.drawRect(h(variable1), v(fixed1), h(variable2), v(fixed2), p);
-			//			g.drawRect(h(fixed1), v(variable1), h(fixed2), v(variable2), p);
-			//		}
 
 			// if we don't have any state, there's nothing more to draw, so return
 			if (state == null) {
