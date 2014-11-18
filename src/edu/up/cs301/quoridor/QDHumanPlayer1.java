@@ -214,7 +214,7 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 				pieceLength = (int)(totalBoardSize/boardSize); //creating piece length based off board size
 				pieceSize = pieceLength+ margin; //create the total piece size
 				pawnSize = (int)(pieceLength/3);
-				int shift = (int)(pieceSize/2);
+				int shift = (int)(pieceSize/2); //correctional shift to center pieces
 				
 //				pawns = state.getPawns();
 //				if (pawns != null) {
@@ -238,40 +238,39 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 							
 						}
 				if (pawns != null){
+					//if there are two players, only draw two pawns
 					if (pawns.length == 2){
 					paint.setColor(Color.RED);
+					
 					g.drawCircle(pawns[0].x*(pieceSize)+shift, pawns[0].y*(pieceSize)+shift, pawnSize, paint);//bottom middle
+					
 					paint.setColor(Color.YELLOW);
-					g.drawCircle(pawns[1].x*(pieceSize)+shift, pawns[1].y+shift, pawnSize, paint); //up
+					g.drawCircle(pawns[1].x*(pieceSize)+shift, pawns[1].y+shift, pawnSize, paint); //top piece
+					}
+					//if there are four players, draw four pawns
 					else if(pawns.length == 4){
 						paint.setColor(Color.RED);
 						g.drawCircle(pawns[0].x*(pieceSize)+shift, pawns[0].y*(pieceSize)+shift, pawnSize, paint);//bottom middle
+						
 						paint.setColor(Color.YELLOW);
 						g.drawCircle(pawns[1].x*(pieceSize)+shift, pawns[1].y+shift, pawnSize, paint); //up
+						
 						paint.setColor(Color.GREEN);
-						g.drawCircle(shift, 4*(pieceSize)+shift, pawnSize, paint);//right side player
+						
+						g.drawCircle(pawns[2].x+shift, pawns[2].y*(pieceSize)+shift, pawnSize, paint);//right side player
+						
 						paint.setColor(Color.BLUE);
-						g.drawCircle(8*(pieceSize)+shift, 4*(pieceSize)+shift, pawnSize, paint);//left
-					
-					
-					
+						g.drawCircle(pawns[3].x*(pieceSize)+shift, pawns[3].y*(pieceSize)+shift, pawnSize, paint);//left
+
 					}
 				}
+
+		//draw stacks of walls with number of walls left on top
+		paint.setColor(Color.CYAN);
+		g.drawRect(700, 100, 800, 150, paint);	
 				
 				
-				//paint.setColor(Color.BLACK);
-				//draw pawns on board
-//				paint.setColor(Color.MAGENTA);
-//				g.drawCircle(margin, (totalBoardSize/2), pawnSize, paint);//left side player
-//				g.drawCircle((totalBoardSize/2), (totalBoardSize), pawnSize, paint);//upper player
-//				g.drawCircle((totalBoardSize/2), totalBoardSize, pawnSize, paint); //bottom player
-//				g.drawCircle((totalBoardSize/2), (totalBoardSize/2)+1, pawnSize, paint);//right side player
-					
-
-				/////////////////////////////////////////////////////////////////////////////
-
-		
-		
+				
 		// if the full square size is outdated our variables that relate
 		// to the dimensions of the animation surface
 		if (fullSquare < 0) {
