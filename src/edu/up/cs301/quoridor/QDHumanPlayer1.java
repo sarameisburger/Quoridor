@@ -64,9 +64,10 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 	protected QDState state;
 	private Point[] pawns;
 	private int[] wallsRemain;
+	private Point[] validPawnMoves;
 
 	//Colors
-	int wallBrown;
+	int wallBrown, highlight;
 
 	//graphics variables
 	int shift;  //correctional shift to center pieces
@@ -128,6 +129,7 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 			this.state = (QDState) info;
 			pawns = state.getPawns();
 			wallsRemain = state.getWallsRem();
+			//validPawnMoves = state.validPawnMoves();
 			Log.i("human player", "receiving");
 		}
 	}
@@ -342,6 +344,31 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 				paint.setColor(Color.BLUE);
 				g.drawText(allPlayerNames[3], wallStartX+pieceSize, 4*wallStartY, paint);
 			}
+			
+			//highlight valid moves
+			highlight = Color.argb(100,243,249,69);
+			
+			//test for highlighting
+			validPawnMoves = new Point[2];
+			for(int p = 0; p < validPawnMoves.length; p++) {
+			    validPawnMoves[p] = new Point();
+			}
+			if (validPawnMoves != null){
+			validPawnMoves[0].x = 4;
+			validPawnMoves[0].y = 4;
+			validPawnMoves[1].x = 8;
+			validPawnMoves[1].y = 8;
+			}
+			
+			if (validPawnMoves != null){
+			for (int k = 0; k < validPawnMoves.length; k++){
+				
+				paint.setColor(highlight);//set to highlight color
+				
+				g.drawRect(margin+(validPawnMoves[k].x*pieceSize), margin+(validPawnMoves[k].y*pieceSize), pieceSize+(validPawnMoves[k].x*pieceSize), pieceSize+(validPawnMoves[k].y*pieceSize), paint);
+			}
+			}
+			
 
 
 
