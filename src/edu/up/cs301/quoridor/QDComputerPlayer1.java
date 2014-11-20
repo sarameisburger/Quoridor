@@ -68,7 +68,7 @@ public class QDComputerPlayer1 extends QDComputerPlayer
 
 		//int counter = 0;
 		//check if pawn or wall
-		if(piece == 1) {
+		if(piece == 0) {
 			//randomly choose any intersection
 			int x = (int)(Math.random()*9);
 			int y = (int)(Math.random()*9);
