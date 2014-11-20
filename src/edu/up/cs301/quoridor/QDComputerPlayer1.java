@@ -70,8 +70,8 @@ public class QDComputerPlayer1 extends QDComputerPlayer
 		//check if pawn or wall
 		if(piece == 0) {
 			//randomly choose any intersection
-			int x = (int)(Math.random()*9);
-			int y = (int)(Math.random()*9);
+			int x = (int)(Math.random()*8);
+			int y = (int)(Math.random()*8);
 
 			//randomly choose an orientation
 			int ori = (int)(Math.random() * 2);
