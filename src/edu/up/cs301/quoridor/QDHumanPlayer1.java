@@ -517,8 +517,8 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 		protected void drawSymbol(Canvas g, char sym, int col, int row) {
 
 			// compute the pixel-location
-			float xLoc = BORDER_PERCENT + col * SQUARE_DELTA_PERCENT; // compute ...
-			float yLoc = BORDER_PERCENT + row * SQUARE_DELTA_PERCENT; // ... location
+			float xLoc = col * pieceSize; // compute ...
+			float yLoc = row * pieceSize; // ... location
 
 			// set the paint color to be the foreground color
 			Paint p = new Paint();
