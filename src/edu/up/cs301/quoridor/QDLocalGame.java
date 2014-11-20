@@ -149,6 +149,7 @@ public class QDLocalGame extends LocalGame implements QDGame {
 	protected boolean makeMove(GameAction action) {
 
 		// get the row and column position of the player's move
+		
 		QDMovePawnAction tm = (QDMovePawnAction) action;
 		int row = tm.getY();
 		int col = tm.getX();
