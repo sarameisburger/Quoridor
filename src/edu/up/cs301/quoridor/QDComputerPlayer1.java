@@ -57,7 +57,7 @@ public class QDComputerPlayer1 extends QDComputerPlayer
 		//randomly place pawn or wall
 		int piece;
 		//decide pawn or wall
-		int val = (int)(Math.random()*2);
+		int val = (int)(Math.random()*5);
 
 		if(val == 0){
 			piece = 0;

@@ -476,20 +476,23 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 		// get the x and y coordinates of the touch-location;
 		// convert them to square coordinates (where both
 		// values are in the range 0..2)
-		float x = (float) event.getX();
-		float y = (float) event.getY();
+		//float x = (float) event.getX();
+		//float y = (float) event.getY();
+		int x = (int)event.getX();
+		int y = (int) event.getY();
 		Point p = mapPixelToSquare(x, y);
 
 		// if the location did not map to a legal square, flash
 		// the screen; otherwise, create and send an action to
 		// the game
-		//			if (p == null) {
-		//				surface.flash(Color.RED, 50);
-		//			} else {
-		QDMovePawnAction action = new QDMovePawnAction(this, p.y, p.x);
+					if (p == null) {
+						//dont do anything if touch not in playing field
+					} else {
+		QDMovePawnAction action = new QDMovePawnAction(this, p.x, p.y);
 		//QDMovePawnAction action = new QDMovePawnAction(this, 4, 7);
 		Log.i("onTouch", "Human player sending TTTMA ...");
 		game.sendAction(action);
+					}
 		//}
 
 	}
@@ -639,6 +642,7 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 	 *         number of square at that point
 	 */
 
+	@SuppressWarnings("null")
 	public Point mapPixelToSquare(float x, float y) 
 	{
 		//number of tiles drawn based from square width
@@ -668,7 +672,7 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 						//}
 						//test by changing square to 0, which should turn it black when surface.invalidate is called
 						//model.setTiles(i, j, 0);
-						Point p = null;
+						Point p = new Point(0,0);
 						p.x = i;
 						p.y = j;
 						return p;
