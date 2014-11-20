@@ -17,7 +17,7 @@ import edu.up.cs301.quoridor.QDState;
 
 public class QDComputerPlayer1 extends QDComputerPlayer
 {
-	
+
 	protected QDState state; 
 	protected Point[] moves; 
 	/*
@@ -26,7 +26,6 @@ public class QDComputerPlayer1 extends QDComputerPlayer
 	public QDComputerPlayer1(String name) {
 		// invoke superclass constructor
 		super(name); // invoke superclass constructor
-		//QDState state = new QDS
 	}
 
 	/**
@@ -36,7 +35,7 @@ public class QDComputerPlayer1 extends QDComputerPlayer
 	 * @param gameInfo
 	 * 		the message from the game
 	 */
-	
+
 	/**
 	 * Called when the player receives a game-state (or other info) from the
 	 * game.
@@ -89,14 +88,12 @@ public class QDComputerPlayer1 extends QDComputerPlayer
 			//move pawn instead
 			//first, get the legal moves from the state
 			this.state = (QDState) info;
-			moves = state.legalPawnMoves(1);
-						
+			moves = state.legalPawnMoves(1); //???
+
 			//randomly pick a valid move
 			if(moves != null)
 			{
-				int i = (int)(Math.random() * (moves.length + 1));
-			
-			
+				int i = (int)(Math.random() * (moves.length));
 				game.sendAction(new QDMovePawnAction(this, moves[i].x, moves[i].y));
 			} else {
 				return;
