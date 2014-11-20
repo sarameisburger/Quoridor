@@ -156,6 +156,9 @@ public class QDState extends GameState
     }
     
     public boolean isWalled(int x, int y, int dir) {
+    	// guard
+    	if (x > 7 || y > 7 || x < 0 || y < 0) { return false; }
+    	
     	return (wallLoc[y][x] & dir) == dir; 
 //    	return false;
     }
@@ -163,6 +166,9 @@ public class QDState extends GameState
     public boolean intersectIsWalled(int x, int y) {
     	boolean walled = true;
     	int walledSides = 0;
+    	
+    	// guard
+    	if (x > 7 || y > 7 || x < 0 || y < 0) { return false; }
     	
     	// Check if there are any walls at all
     	if (wallLoc[y][x] == 0
@@ -248,6 +254,9 @@ public class QDState extends GameState
 //    			|| wallRem[p] == 0) {
 //    		return false;
 //    	}
+    	
+    	// guard
+    	if (x > 7 || y > 7 || x < 0 || y < 0) { return false; }
     	
     	// Check legality (for the bazillionth time)
     	if (!canPlaceWall(p, x, y, dir)) { return false; }

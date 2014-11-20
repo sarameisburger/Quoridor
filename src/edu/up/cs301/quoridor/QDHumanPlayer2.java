@@ -76,7 +76,7 @@ public class QDHumanPlayer2 extends QDHumanPlayer1
 	 * 		board, or null if the point does not correspond to a square
 	 */
     @Override
-	public Point mapPixelToSquare(int x, int y) {
+	public Point mapPixelToSquare(float x, float y) {
     	// user the superclass method, but invert the result because our
     	// view is upside-down
     	Point p = super.mapPixelToSquare(x, y);

@@ -249,7 +249,7 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 		}
 		//draw pawns on board
 		if (pawns != null){
-			
+
 			//if there are two players, only draw two pawns
 			if (pawns.length == 2){
 				paint.setColor(Color.RED);
@@ -257,9 +257,10 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 				g.drawCircle(pawns[0].x*(pieceSize)+shift, pawns[0].y*(pieceSize)+shift, pawnSize, paint);//bottom middle
 
 				paint.setColor(Color.YELLOW);
-				g.drawCircle(pawns[1].x*(pieceSize)+shift, pawns[1].y+shift, pawnSize, paint); //top piece
+				g.drawCircle(pawns[1].x*(pieceSize)+shift, pawns[1].y*(pieceSize)+shift, pawnSize, paint); //top piece
+
 			}
-			
+
 			//if there are four players, draw four pawns
 			else if(pawns.length == 4){
 				paint.setColor(Color.RED);
@@ -287,7 +288,7 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 
 				wallBrown = Color.rgb(153, 76, 0);//make walls brown
 				paint.setColor(wallBrown);//set color to brown
-				
+
 				//draw 2 stacks of walls
 				g.drawRect(wallStartX, wallStartY, (pieceSize*2)+wallStartX, wallStartY+wallWidth, paint);
 				g.drawRect(wallStartX, 2*wallStartY, (pieceSize*2)+wallStartX, 2*wallStartY+wallWidth, paint);
@@ -300,21 +301,21 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 				paint.setColor(Color.BLACK);
 				g.drawText(text0, wallStartX, wallStartY, paint);
 				g.drawText(text1, wallStartX, 2*wallStartY, paint);
-				
+
 				//write out player name in their pawn color
 				paint.setColor(Color.RED);
 				g.drawText(allPlayerNames[0], wallStartX+pieceSize, wallStartY, paint);
-				
+
 				paint.setColor(Color.YELLOW);
 				g.drawText(allPlayerNames[1], wallStartX+pieceSize, 2*wallStartY, paint);
 			}
 			else if(pawns.length == 4){
-				
+
 				paint.setTextSize(50); 
 
 				wallBrown = Color.rgb(153, 76, 0);//make walls brown
 				paint.setColor(wallBrown);//set color to brown
-				
+
 				//draw 4 stacks of walls
 				g.drawRect(wallStartX, wallStartY, (pieceSize*2)+wallStartX, wallStartY+wallWidth, paint);
 				g.drawRect(wallStartX, 2*wallStartY, (pieceSize*2)+wallStartX, 2*wallStartY+wallWidth, paint);
@@ -326,52 +327,52 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 				text1 = String.valueOf(wallsRemain[1]);
 				text2 = String.valueOf(wallsRemain[2]);
 				text3 = String.valueOf(wallsRemain[3]);
-				
+
 				//draw value of walls remaining for each player
 				paint.setColor(Color.BLACK);
 				g.drawText(text0, wallStartX, wallStartY, paint);
 				g.drawText(text1, wallStartX, 2*wallStartY, paint);
 				g.drawText(text2, wallStartX, 3*wallStartY, paint);
 				g.drawText(text3, wallStartX, 4*wallStartY, paint);
-				
+
 				//write out player name in their pawn color
 				paint.setColor(Color.RED);
 				g.drawText(allPlayerNames[0], wallStartX+pieceSize, wallStartY, paint);
-				
+
 				paint.setColor(Color.YELLOW);
 				g.drawText(allPlayerNames[1], wallStartX+pieceSize, 2*wallStartY, paint);
 
 				paint.setColor(Color.GREEN);
 				g.drawText(allPlayerNames[2], wallStartX+pieceSize, 3*wallStartY, paint);
-				
+
 				paint.setColor(Color.BLUE);
 				g.drawText(allPlayerNames[3], wallStartX+pieceSize, 4*wallStartY, paint);
 			}
-			
+
 			//highlight valid moves
 			highlight = Color.argb(100,243,249,69);
-			
+
 			//test for highlighting
-//			validPawnMoves = new Point[2];
-//			for(int p = 0; p < validPawnMoves.length; p++) {
-//			    validPawnMoves[p] = new Point();
-//			}
-//			if (validPawnMoves != null){
-//			validPawnMoves[0].x = 4;
-//			validPawnMoves[0].y = 4;
-//			validPawnMoves[1].x = 8;
-//			validPawnMoves[1].y = 8;
-//			}
-			
+			//			validPawnMoves = new Point[2];
+			//			for(int p = 0; p < validPawnMoves.length; p++) {
+			//			    validPawnMoves[p] = new Point();
+			//			}
+			//			if (validPawnMoves != null){
+			//			validPawnMoves[0].x = 4;
+			//			validPawnMoves[0].y = 4;
+			//			validPawnMoves[1].x = 8;
+			//			validPawnMoves[1].y = 8;
+			//			}
+
 			if (legalPawnMoves != null){
-			for (int k = 0; k < legalPawnMoves.length; k++){
-				
-				paint.setColor(highlight);//set to highlight color
-				
-				g.drawRect(margin+(legalPawnMoves[k].x*pieceSize), margin+(legalPawnMoves[k].y*pieceSize), pieceSize+(legalPawnMoves[k].x*pieceSize), pieceSize+(legalPawnMoves[k].y*pieceSize), paint);
+				for (int k = 0; k < legalPawnMoves.length; k++){
+
+					paint.setColor(highlight);//set to highlight color
+
+					g.drawRect(margin+(legalPawnMoves[k].x*pieceSize), margin+(legalPawnMoves[k].y*pieceSize), pieceSize+(legalPawnMoves[k].x*pieceSize), pieceSize+(legalPawnMoves[k].y*pieceSize), paint);
+				}
 			}
-			}
-			
+
 
 
 
@@ -395,238 +396,293 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 				}
 			}
 		}
-		}
+	}
 
-		/**
-		 * helper-method to convert from a percentage to a horizontal pixel location
-		 * 
-		 * @param percent
-		 * 		the percentage across the drawing square
-		 * @return
-		 * 		the pixel location that corresponds to that percentage
-		 */
-		protected float h(float percent) {
-			return hBase + percent * fullSquare / 100;
-		}
+	/**
+	 * helper-method to convert from a percentage to a horizontal pixel location
+	 * 
+	 * @param percent
+	 * 		the percentage across the drawing square
+	 * @return
+	 * 		the pixel location that corresponds to that percentage
+	 */
+	protected float h(float percent) {
+		return hBase + percent * fullSquare / 100;
+	}
 
-		/**
-		 * helper-method to convert from a percentage to a vertical pixel location
-		 * 
-		 * @param percent
-		 * 		the percentage down the drawing square
-		 * @return
-		 * 		the pixel location that corresponds to that percentage
-		 */
-		protected float v(float percent) {
-			return vBase + percent * fullSquare / 100;
-		}
+	/**
+	 * helper-method to convert from a percentage to a vertical pixel location
+	 * 
+	 * @param percent
+	 * 		the percentage down the drawing square
+	 * @return
+	 * 		the pixel location that corresponds to that percentage
+	 */
+	protected float v(float percent) {
+		return vBase + percent * fullSquare / 100;
+	}
 
-		/**
-		 * update the instance variables that relate to the drawing surface
-		 * 
-		 * @param g
-		 * 		an object that references the drawing surface
-		 */
-		private void updateDimensions(Canvas g) {
+	/**
+	 * update the instance variables that relate to the drawing surface
+	 * 
+	 * @param g
+	 * 		an object that references the drawing surface
+	 */
+	private void updateDimensions(Canvas g) {
 
-			// initially, set the height and width to be that of the
-			// drawing surface
-			int width = g.getWidth();
-			int height = g.getHeight();
+		// initially, set the height and width to be that of the
+		// drawing surface
+		int width = g.getWidth();
+		int height = g.getHeight();
 
-			// Set the "full square" size to be the minimum of the height and
-			// the width. Depending on which is greater, set either the
-			// horizontal or vertical base to be partway across the screen,
-			// so that the "playing square" is in the middle of the screen on
-			// its long dimension
-			if (width > height) {
-				fullSquare = height;
-				vBase = 0;
-				hBase = (width - height) / (float) 2.0;
-			} else {
-				fullSquare = width;
-				hBase = 0;
-				vBase = (height - width) / (float) 2.0;
-			}
-
-		}
-
-		/**
-		 * @return
-		 * 		the color to paint the tic-tac-toe lines, and the X's and O's
-		 */
-		public int foregroundColor() {
-			return Color.YELLOW;
-		}
-
-		/**
-		 * callback method when the screen it touched. We're
-		 * looking for a screen touch (which we'll detect on
-		 * the "up" movement" onto a tic-tac-tie square
-		 * 
-		 * @param event
-		 * 		the motion event that was detected
-		 */
-		public void onTouch(MotionEvent event) {
-
-			// ignore if not an "up" event
-			if (event.getAction() != MotionEvent.ACTION_UP) return;
-
-			// get the x and y coordinates of the touch-location;
-			// convert them to square coordinates (where both
-			// values are in the range 0..2)
-			int x = (int) event.getX();
-			int y = (int) event.getY();
-			Point p = mapPixelToSquare(x, y);
-
-			// if the location did not map to a legal square, flash
-			// the screen; otherwise, create and send an action to
-			// the game
-			if (p == null) {
-				surface.flash(Color.RED, 50);
-			} else {
-				QDMovePawnAction action = new QDMovePawnAction(this, p.y, p.x);
-				Log.i("onTouch", "Human player sending TTTMA ...");
-				game.sendAction(action);
-			}
-
-		}
-
-		// x- and y-percentage-coordinates for a polygon that displays the X's
-		// first slash
-		private static float[] xPoints1 = { 6.25f, 12.5f, 87.5f, 93.75f };
-		private static float[] yPoints1 = { 12.5f, 6.25f, 93.75f, 87.5f };
-
-		// x- and y-percentage-coordinates for a polygon that displays the X's
-		// second slash
-		private static float[] xPoints2 = { 87.5f, 6.25f, 93.75f, 12.5f };
-		private static float[] yPoints2 = { 6.25f, 87.5f, 12.5f, 93.75f };
-
-		/**
-		 * Draw a symbol (X or O) on the canvas in a particular location
-		 * 
-		 * @param g
-		 *            the graphics object on which to draw
-		 * @param sym
-		 *            the symbol to draw (X or O)
-		 * @param col
-		 *            the column number of the square on which to draw (0, 1 or 2)
-		 * @param col
-		 *            the row number of the square on which to draw (0, 1 or 2)
-		 */
-		protected void drawSymbol(Canvas g, char sym, int col, int row) {
-
-			// compute the pixel-location
-			float xLoc = col * pieceSize; // compute ...
-			float yLoc = row * pieceSize; // ... location
-
-			// set the paint color to be the foreground color
-			Paint p = new Paint();
-			p.setColor(foregroundColor());
-
-			// draw either an X or O, depending on the symbol
-			switch (sym) {
-			case 'O':
-				// 'O' found: draw it by drawing two circles: an outer one with the
-				// foreground color, and an inner one with the background color
-				RectF rect = new RectF(h(xLoc + 5), v(yLoc + 1), h(xLoc
-						+ SQUARE_SIZE_PERCENT - 5), v(yLoc + SQUARE_SIZE_PERCENT
-								- 1));
-				g.drawOval(rect, p); // outside of the 'O'
-				p.setColor(backgroundColor());
-				rect = new RectF(h(xLoc + 6), v(yLoc + 2), h(xLoc
-						+ SQUARE_SIZE_PERCENT - 8), v(yLoc + SQUARE_SIZE_PERCENT
-								- 3));
-				g.drawOval(rect, p); // carve out "hole"
-				break;
-			case 'X': // 'X' found: draw it
-
-				// create a translation matrix to move Path to the given square on the
-				// surface
-				Matrix translateMatrix = new Matrix();
-				translateMatrix.setTranslate(h(xLoc), v(yLoc));
-
-				// create the Path object for the X's first slash; move and draw it
-				Path pth = createPoly(xPoints1, yPoints1, fullSquare
-						* SQUARE_SIZE_PERCENT / 100);
-				pth.transform(translateMatrix);
-				g.drawPath(pth, p);
-
-				// create the Path object for the X's second slash; move and draw it
-				pth = createPoly(xPoints2, yPoints2, fullSquare
-						* SQUARE_SIZE_PERCENT / 100);
-				pth.transform(translateMatrix);
-				g.drawPath(pth, p);
-				break;
-			default:
-				// if not X or O, draw nothing
-				break;
-			}
-		}
-
-		/**
-		 * helper-method to create a scaled polygon (Path) object from a list of points
-		 * 
-		 * @param xPoints
-		 * 		list of x-coordinates, taken as percentages
-		 * @param yPoints
-		 * 		corresponding list of y-coordinates--should have the same length as xPoints
-		 * @param scale
-		 * 		factor by which to scale them
-		 * @return
-		 */
-		private Path createPoly(float[] xPoints, float[] yPoints, float scale) {
-
-			// in case array-lengths are different, take the minimim length, to avoid
-			// array-out-of-bounds errors
-			int count = Math.min(xPoints.length, yPoints.length);
-
-			// run through the points, adding each to the Path object, scaling as we go
-			Path rtnVal = new Path();
-			rtnVal.moveTo(xPoints[0] * scale / 100, yPoints[0] * scale / 100);
-			for (int i = 1; i < count; i++) {
-				float xPoint = xPoints[i] * scale / 100;
-				float yPoint = yPoints[i] * scale / 100;
-				rtnVal.lineTo(xPoint, yPoint);
-			}
-
-			// close the Path into a polygon; return the object
-			rtnVal.close();
-			return rtnVal;
-		}
-
-		/**
-		 * maps a point from the canvas' pixel coordinates to "square" coordinates
-		 * 
-		 * @param x
-		 * 		the x pixel-coordinate
-		 * @param y
-		 * 		the y pixel-coordinate
-		 * @return
-		 *		a Point whose components are in the range 0-2, indicating the
-		 *		column and row of the corresponding square on the tic-tac-toe
-		 * 		board, or null if the point does not correspond to a square
-		 */
-		public Point mapPixelToSquare(int x, int y) {
-
-			// loop through each square and see if we get a "hit"; if so, return
-			// the corresponding Point in "square" coordinates
-			for (int i = 0; i < 9; i++) {
-				for (int j = 0; j < 9; j++) {
-					float left = h((i * pieceLength));
-					float right = h(pieceLength
-							+ (i * pieceSize));
-					float top = v((j * pieceLength));
-					float bottom = v(pieceLength
-							+ (j * pieceSize));
-					if ((x > left) != (x > right) && (y > top) != (y > bottom)) {
-						return new Point(i, j);
-					}
-				}
-			}
-
-			// no match: return null
-			return null;
+		// Set the "full square" size to be the minimum of the height and
+		// the width. Depending on which is greater, set either the
+		// horizontal or vertical base to be partway across the screen,
+		// so that the "playing square" is in the middle of the screen on
+		// its long dimension
+		if (width > height) {
+			fullSquare = height;
+			vBase = 0;
+			hBase = (width - height) / (float) 2.0;
+		} else {
+			fullSquare = width;
+			hBase = 0;
+			vBase = (height - width) / (float) 2.0;
 		}
 
 	}
+
+	/**
+	 * @return
+	 * 		the color to paint the tic-tac-toe lines, and the X's and O's
+	 */
+	public int foregroundColor() {
+		return Color.YELLOW;
+	}
+
+	/**
+	 * callback method when the screen it touched. We're
+	 * looking for a screen touch (which we'll detect on
+	 * the "up" movement" onto a tic-tac-tie square
+	 * 
+	 * @param event
+	 * 		the motion event that was detected
+	 */
+	public void onTouch(MotionEvent event) {
+
+		// ignore if not an "up" event
+		if (event.getAction() != MotionEvent.ACTION_UP) return;
+
+		// get the x and y coordinates of the touch-location;
+		// convert them to square coordinates (where both
+		// values are in the range 0..2)
+		float x = (float) event.getX();
+		float y = (float) event.getY();
+		Point p = mapPixelToSquare(x, y);
+
+		// if the location did not map to a legal square, flash
+		// the screen; otherwise, create and send an action to
+		// the game
+		//			if (p == null) {
+		//				surface.flash(Color.RED, 50);
+		//			} else {
+		QDMovePawnAction action = new QDMovePawnAction(this, p.y, p.x);
+		//QDMovePawnAction action = new QDMovePawnAction(this, 4, 7);
+		Log.i("onTouch", "Human player sending TTTMA ...");
+		game.sendAction(action);
+		//}
+
+	}
+
+	// x- and y-percentage-coordinates for a polygon that displays the X's
+	// first slash
+	private static float[] xPoints1 = { 6.25f, 12.5f, 87.5f, 93.75f };
+	private static float[] yPoints1 = { 12.5f, 6.25f, 93.75f, 87.5f };
+
+	// x- and y-percentage-coordinates for a polygon that displays the X's
+	// second slash
+	private static float[] xPoints2 = { 87.5f, 6.25f, 93.75f, 12.5f };
+	private static float[] yPoints2 = { 6.25f, 87.5f, 12.5f, 93.75f };
+
+	/**
+	 * Draw a symbol (X or O) on the canvas in a particular location
+	 * 
+	 * @param g
+	 *            the graphics object on which to draw
+	 * @param sym
+	 *            the symbol to draw (X or O)
+	 * @param col
+	 *            the column number of the square on which to draw (0, 1 or 2)
+	 * @param col
+	 *            the row number of the square on which to draw (0, 1 or 2)
+	 */
+	protected void drawSymbol(Canvas g, char sym, int col, int row) {
+
+		// compute the pixel-location
+		float xLoc = col * pieceSize; // compute ...
+		float yLoc = row * pieceSize; // ... location
+
+		// set the paint color to be the foreground color
+		Paint p = new Paint();
+		p.setColor(foregroundColor());
+
+		// draw either an X or O, depending on the symbol
+		switch (sym) {
+		case 'O':
+			// 'O' found: draw it by drawing two circles: an outer one with the
+			// foreground color, and an inner one with the background color
+			RectF rect = new RectF(h(xLoc + 5), v(yLoc + 1), h(xLoc
+					+ SQUARE_SIZE_PERCENT - 5), v(yLoc + SQUARE_SIZE_PERCENT
+							- 1));
+			g.drawOval(rect, p); // outside of the 'O'
+			p.setColor(backgroundColor());
+			rect = new RectF(h(xLoc + 6), v(yLoc + 2), h(xLoc
+					+ SQUARE_SIZE_PERCENT - 8), v(yLoc + SQUARE_SIZE_PERCENT
+							- 3));
+			g.drawOval(rect, p); // carve out "hole"
+			break;
+		case 'X': // 'X' found: draw it
+
+			// create a translation matrix to move Path to the given square on the
+			// surface
+			Matrix translateMatrix = new Matrix();
+			translateMatrix.setTranslate(h(xLoc), v(yLoc));
+
+			// create the Path object for the X's first slash; move and draw it
+			Path pth = createPoly(xPoints1, yPoints1, fullSquare
+					* SQUARE_SIZE_PERCENT / 100);
+			pth.transform(translateMatrix);
+			g.drawPath(pth, p);
+
+			// create the Path object for the X's second slash; move and draw it
+			pth = createPoly(xPoints2, yPoints2, fullSquare
+					* SQUARE_SIZE_PERCENT / 100);
+			pth.transform(translateMatrix);
+			g.drawPath(pth, p);
+			break;
+		default:
+			// if not X or O, draw nothing
+			break;
+		}
+	}
+
+	/**
+	 * helper-method to create a scaled polygon (Path) object from a list of points
+	 * 
+	 * @param xPoints
+	 * 		list of x-coordinates, taken as percentages
+	 * @param yPoints
+	 * 		corresponding list of y-coordinates--should have the same length as xPoints
+	 * @param scale
+	 * 		factor by which to scale them
+	 * @return
+	 */
+	private Path createPoly(float[] xPoints, float[] yPoints, float scale) {
+
+		// in case array-lengths are different, take the minimim length, to avoid
+		// array-out-of-bounds errors
+		int count = Math.min(xPoints.length, yPoints.length);
+
+		// run through the points, adding each to the Path object, scaling as we go
+		Path rtnVal = new Path();
+		rtnVal.moveTo(xPoints[0] * scale / 100, yPoints[0] * scale / 100);
+		for (int i = 1; i < count; i++) {
+			float xPoint = xPoints[i] * scale / 100;
+			float yPoint = yPoints[i] * scale / 100;
+			rtnVal.lineTo(xPoint, yPoint);
+		}
+
+		// close the Path into a polygon; return the object
+		rtnVal.close();
+		return rtnVal;
+	}
+
+	/**
+	 * maps a point from the canvas' pixel coordinates to "square" coordinates
+	 * 
+	 * @param x
+	 * 		the x pixel-coordinate
+	 * @param y
+	 * 		the y pixel-coordinate
+	 * @return
+	 *		a Point whose components are in the range 0-2, indicating the
+	 *		column and row of the corresponding square on the tic-tac-toe
+	 * 		board, or null if the point does not correspond to a square
+	 */
+	//		public Point mapPixelToSquare(int x, int y) {
+	//
+	//			// loop through each square and see if we get a "hit"; if so, return
+	//			// the corresponding Point in "square" coordinates
+	//			for (int i = 0; i < 9; i++) {
+	//				for (int j = 0; j < 9; j++) {
+	//					float left = h((i * pieceLength));
+	//					float right = h(pieceLength
+	//							+ (i * pieceSize));
+	//					float top = v((j * pieceLength));
+	//					float bottom = v(pieceLength
+	//							+ (j * pieceSize));
+	//					if ((x > left) != (x > right) && (y > top) != (y > bottom)) {
+	//						return new Point(i, j);
+	//					}
+	//				}
+	//			}
+	//\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+	// no match: return null
+	//return null;
+	/**
+	 * tells what square the point is in
+	 * @param x
+	 *         the x-coordinate of the point
+	 * @param y
+	 *         the y-coordinate of the point
+	 * @return
+	 *         number of square at that point
+	 */
+
+	public Point mapPixelToSquare(float x, float y) 
+	{
+		//number of tiles drawn based from square width
+		//int tileSides = (sides - (MainActivity.width - 1) * margin)/MainActivity.width;
+
+		int width = pieceSize * boardSize - margin;
+
+		//iterate through all tile spaces, see where it is located
+		for(int i = 0; i < width; i++)
+		{
+			//Is the x within the boundaries?
+			if(x > margin + i * (pieceSize) && x < margin + (i + 1) * pieceLength + i * margin)
+			{
+				for(int j = 0; j < width; j++)
+				{
+					//tile number for current space
+					//int l = model.getTiles()[i][j];
+
+					//Since is it within the x boundary, is it within the y boundary?
+					if(y > margin + j * (pieceSize) && y < margin + (j + 1) * pieceLength + j * margin)
+					{
+						//within boundary
+						//Now: Is it a valid move?
+						//if(l > 0)
+						//{
+						//  validMove(l);
+						//}
+						//test by changing square to 0, which should turn it black when surface.invalidate is called
+						//model.setTiles(i, j, 0);
+						Point p = null;
+						p.x = i;
+						p.y = j;
+						return p;
+					}
+				}
+			}
+		}
+		return null;
+	}
+	}
+
+		
+	
+
+
+
+

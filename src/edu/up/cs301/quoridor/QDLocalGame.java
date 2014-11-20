@@ -93,7 +93,7 @@ public class QDLocalGame extends LocalGame implements QDGame {
 		// if resultChar is blank, we found no winner, so return null,
 		// unless the board is filled up. In that case, it's a cat's game.
 		if (resultChar == ' ') {
-			if  (moveCount >= 9) {
+			if  (moveCount >= 1000) {
 				// no winner, but all 9 spots have been filled
 				return "It's a cat's game.";
 			}
@@ -148,14 +148,10 @@ public class QDLocalGame extends LocalGame implements QDGame {
 	@Override
 	protected boolean makeMove(GameAction action) {
 
-		// get the row and column position of the player's move
-		
-		QDMovePawnAction tm = (QDMovePawnAction) action;
-		int row = tm.getY();
-		int col = tm.getX();
+
 
 		// get the 0/1 id of our player
-		int playerId = getPlayerIdx(tm.getPlayer());
+		
 
 		// if that space is not blank, indicate an illegal move
 //		if (state.getPiece(row, col) != ' ') {
@@ -167,10 +163,37 @@ public class QDLocalGame extends LocalGame implements QDGame {
 
 		// place the player's piece on the selected square
 //		state.setPiece(row, col, mark[playerId]);
+		boolean changeTurns = false;
+		
+		if (action instanceof QDMovePawnAction) {
+			QDMovePawnAction tm = (QDMovePawnAction) action;
+			int y = tm.getY();
+			int x = tm.getX();
+			
+			int playerId = getPlayerIdx(tm.getPlayer());
+//			int whoseMove = state.getWhoseMove();
+			
+			changeTurns = state.movePawn(playerId, x, y);
+		}
+		else if (action instanceof QDMoveWallAction) {
+			QDMoveWallAction tm = (QDMoveWallAction) action;
+			int x = tm.getX();
+			int y = tm.getY();
+			int ori = tm.getOri();
+			
+			int playerId = getPlayerIdx(tm.getPlayer());
+//			int whoseMove = state.getWhoseMove();
+			
+			changeTurns = state.placeWall(playerId, x, y, ori);
+		}
+		// get the row and column position of the player's move
+		
 
-		// make it the other player's turn
-		state.setWhoseMove(1-whoseMove);
 
+		// if the move was successful, make it the other player's turn
+		if(changeTurns)	{
+			state.nextTurn();
+		}
 		// bump the move count
 		moveCount++;
 		
