@@ -352,18 +352,6 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 			//highlight valid moves
 			highlight = Color.argb(100,243,249,69);
 
-			//test for highlighting
-			//			validPawnMoves = new Point[2];
-			//			for(int p = 0; p < validPawnMoves.length; p++) {
-			//			    validPawnMoves[p] = new Point();
-			//			}
-			//			if (validPawnMoves != null){
-			//			validPawnMoves[0].x = 4;
-			//			validPawnMoves[0].y = 4;
-			//			validPawnMoves[1].x = 8;
-			//			validPawnMoves[1].y = 8;
-			//			}
-
 			if (legalPawnMoves != null){
 				for (int k = 0; k < legalPawnMoves.length; k++){
 
@@ -371,6 +359,29 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 
 					g.drawRect(margin+(legalPawnMoves[k].x*pieceSize), margin+(legalPawnMoves[k].y*pieceSize), pieceSize+(legalPawnMoves[k].x*pieceSize), pieceSize+(legalPawnMoves[k].y*pieceSize), paint);
 				}
+				
+			//draw walls on board
+			//get the intersections from the state
+			int[][] wallInter = state.getIntersections();
+			for(int r = 0; r < wallInter.length; r++)
+			{
+				for(int c = 0; c < wallInter[r].length; c++)
+				{
+					//
+					if (wallInter[r][c] == QDState.HORIZONTAL )
+					{
+						//there's a horizontal wall here!
+						//draw it
+					} else if (wallInter[r][c] == QDState.VERTICAL)
+					{
+						//there's a vertical wall here!
+						//draw it
+					}
+					
+				}
+			}
+				
+				
 			}
 
 

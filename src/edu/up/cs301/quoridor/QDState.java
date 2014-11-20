@@ -25,7 +25,9 @@ public class QDState extends GameState
     ///////////////////////////////////////////////////
 	
 //	private char[][] board;
-    
+    //intersections and whether they are filled
+	private int[][] intersections;
+	
     // the coordinates of the pawns
     private Point[] pawns;
     
@@ -77,6 +79,9 @@ public class QDState extends GameState
     			wallRem[i] = 5;
     		}
     	}
+    	
+    	//initialize wall intersections
+    	intersections = new int[8][8];
     	
     	// QD TODO: pawns based on number of players
 //    	players[players] = new GamePlayer();
@@ -135,6 +140,14 @@ public class QDState extends GameState
      */
     public int[][] getWallsLoc() {
     	return wallLoc;
+    }
+    
+    /**
+     * 
+     * @return array of intersections and whether a wall passes through them
+     */
+    public int[][] getIntersections() {
+    	return intersections;
     }
     
     /**
@@ -290,6 +303,8 @@ public class QDState extends GameState
         }
     	
     	wallRem[p]--;
+
+    	intersections[y][x] = dir;
     	
     	return true;
     }
