@@ -65,6 +65,7 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 	private Point[] pawns;
 	private int[] wallsRemain;
 	private Point[] legalPawnMoves;
+	private int[][] wallLoc;
 	private int p;
 
 	//Colors
@@ -610,14 +611,14 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 
 			// loop through each square and see if we get a "hit"; if so, return
 			// the corresponding Point in "square" coordinates
-			for (int i = 0; i < 3; i++) {
-				for (int j = 0; j < 3; j++) {
-					float left = h(BORDER_PERCENT + (i * SQUARE_DELTA_PERCENT));
-					float right = h(BORDER_PERCENT + SQUARE_SIZE_PERCENT
-							+ (i * SQUARE_DELTA_PERCENT));
-					float top = v(BORDER_PERCENT + (j * SQUARE_DELTA_PERCENT));
-					float bottom = v(BORDER_PERCENT + SQUARE_SIZE_PERCENT
-							+ (j * SQUARE_DELTA_PERCENT));
+			for (int i = 0; i < 9; i++) {
+				for (int j = 0; j < 9; j++) {
+					float left = h((i * pieceLength));
+					float right = h(pieceLength
+							+ (i * pieceSize));
+					float top = v((j * pieceLength));
+					float bottom = v(pieceLength
+							+ (j * pieceSize));
 					if ((x > left) != (x > right) && (y > top) != (y > bottom)) {
 						return new Point(i, j);
 					}
