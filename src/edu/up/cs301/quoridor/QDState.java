@@ -41,6 +41,10 @@ public class QDState extends GameState
     // players
     private GamePlayer[] players;
     
+    // Legal pawn moves per player, not safe
+    // to directly access. Don't do it.
+    private ArrayList<Point> legalMoves;
+    
     // Constants
     public static final int EMPTY = 0;
     public static final int LEFT = 1;
@@ -219,20 +223,31 @@ public class QDState extends GameState
     }
     
     public boolean movePawn(int p, int x, int y) {
+    	// Initial bounds check
     	if (p >= pawns.length || x >= 9 || y >= 9 || x < 0 || y < 0) { return false; }
-    	pawns[p] = new Point(x,y);
-    	return true;
+    	
+    	// Check through legal moves, make the move if legal
+    	Point[] legalMoves = legalPawnMoves(p);
+    	for (Point move : legalMoves) {
+    		if (move.x == x && move.y == y) {
+    	    	pawns[p] = new Point(x,y);
+    	    	return true;
+    		}
+    	}
+
+    	// Return false if move is illegal
+    	return false;
     }
     
     public boolean placeWall(int p, int x, int y, int dir) {
     	// guard
     	
-    	// Stuff LocalGame should check, but we can double check
-    	if (intersectIsWalled(x, y)
-    			|| p >= wallRem.length
-    			|| wallRem[p] == 0) {
-    		return false;
-    	}
+//    	// double check
+//    	if (intersectIsWalled(x, y)
+//    			|| p >= wallRem.length
+//    			|| wallRem[p] == 0) {
+//    		return false;
+//    	}
     	
     	// Check legality (for the bazillionth time)
     	if (!canPlaceWall(p, x, y, dir)) { return false; }
@@ -308,102 +323,115 @@ public class QDState extends GameState
 		return true;
 	}
 	
-	/**
-	 * canMovePawn()
-	 * 
-	 * Presently contains minimal jumping logic
-	 * @param p
-	 * @param x
-	 * @param y
-	 * @return
-	 */
-	public boolean canMovePawn(int p, int x, int y) {
-		// Are the numbers even in the correct ranges
-		if (p >= pawns.length || x >= 9 || y >= 9 || x < 0 || y < 0) { return false; }
-		
-		// Check if it's a different square than what the pawn is on
-		if (pawns[p].x == x && pawns[p].y == y) { return false; }
-		
-		// Where is the desired square in relation to the current position?
-		
-		// Adjacent?
-		if ((Math.abs(pawns[p].x - x) == 1 && pawns[p].y == y)
-				|| (pawns[p].x == x && Math.abs(pawns[p].y - y) == 1)) {
-			// Direction of adjacency
-			int adjDir = -1;
-
-			if (pawns[p].x - x == 1) {
-				adjDir = LEFT;
-			}
-			else if (pawns[p].x - x == -1) {
-				adjDir = RIGHT;
-			}
-			else if (pawns[p].y - y == 1) {
-				adjDir = UP;
-			}
-			else if (pawns[p].y - y == -1) {
-				adjDir = DOWN;
-			}
-			
-			// for testing
-			if (adjDir == -1) {
-				Log.w("canMovePawn", "Bad adjacency checking");
-			}
-			
-			// Check if that direction is walled off.
-			if (isWalled(pawns[p].x, pawns[p].y, adjDir)) {
-				return false;
-			}
-			
-		}
-		
-		return true;
-	}
+//	/**
+//	 * canMovePawn()
+//	 * 
+//	 * Presently contains minimal jumping logic
+//	 * @param p
+//	 * @param x
+//	 * @param y
+//	 * @return
+//	 */
+//	public boolean canMovePawn(int p, int x, int y) {
+//		// Are the numbers even in the correct ranges
+//		if (p >= pawns.length || x >= 9 || y >= 9 || x < 0 || y < 0) { return false; }
+//		
+//		// Check if it's a different square than what the pawn is on
+//		if (pawns[p].x == x && pawns[p].y == y) { return false; }
+//		
+//		// Where is the desired square in relation to the current position?
+//		
+//		// Adjacent?
+//		if ((Math.abs(pawns[p].x - x) == 1 && pawns[p].y == y)
+//				|| (pawns[p].x == x && Math.abs(pawns[p].y - y) == 1)) {
+//			// Direction of adjacency
+//			int adjDir = -1;
+//
+//			if (pawns[p].x - x == 1) {
+//				adjDir = LEFT;
+//			}
+//			else if (pawns[p].x - x == -1) {
+//				adjDir = RIGHT;
+//			}
+//			else if (pawns[p].y - y == 1) {
+//				adjDir = UP;
+//			}
+//			else if (pawns[p].y - y == -1) {
+//				adjDir = DOWN;
+//			}
+//			
+//			// for testing
+//			if (adjDir == -1) {
+//				Log.w("canMovePawn", "Bad adjacency checking");
+//			}
+//			
+//			// Check if that direction is walled off.
+//			if (isWalled(pawns[p].x, pawns[p].y, adjDir)) {
+//				return false;
+//			}
+//			
+//		}
+//		
+//		return true;
+//	}
 	
 	public Point[] legalPawnMoves(int p) {
 		// player valid?
-		ArrayList<Point> legalMoves = new ArrayList<Point>();
+		legalMoves = new ArrayList<Point>();
 		if (p >= pawns.length) { return new Point[0]; }
 		
 		
 		// Lots of redundancies. Fix later.
 		
-		// LEFT
-		if (pawns[p].x != 0) {
-			if (!isWalled(pawns[p].x, pawns[p].y, LEFT)
-					&& !isPawned(pawns[p].x - 1, pawns[p].y)) {
-				legalMoves.add(new Point(pawns[p].x - 1, pawns[p].y));
-			}
-		}
-		
-		// RIGHT
-		if (pawns[p].x != 8) {
-			if (!isWalled(pawns[p].x, pawns[p].y, RIGHT)
-					&& !isPawned(pawns[p].x + 1, pawns[p].y)) {
-				legalMoves.add(new Point(pawns[p].x + 1, pawns[p].y));
-			}
-		}
-		
-		// UP
-		if (pawns[p].y != 0) {
-			if (!isWalled(pawns[p].x, pawns[p].y, UP)
-					&& !isPawned(pawns[p].x, pawns[p].y - 1)) {
-				legalMoves.add(new Point(pawns[p].x, pawns[p].y - 1));
-			}
-		}
-		
-		// DOWN
-		if (pawns[p].y != 8) {
-			if (!isWalled(pawns[p].x, pawns[p].y, DOWN)
-					&& !isPawned(pawns[p].x, pawns[p].y + 1)) {
-				legalMoves.add(new Point(pawns[p].x, pawns[p].y + 1));
-			}
-		}
+        // LEFT
+        if (pawns[p].x != 0) {
+            if (!isWalled(pawns[p].x, pawns[p].y, LEFT)
+                    && !isPawned(pawns[p].x - 1, pawns[p].y)) {
+                legalMoves.add(new Point(pawns[p].x - 1, pawns[p].y));
+            }
+            else if (isPawned(pawns[p].x - 1, pawns[p].y)) {
+                jumpMoves(pawns[p].x - 1, pawns[p].y);
+            }
+        }
+        
+        // RIGHT
+        if (pawns[p].x != 8) {
+            if (!isWalled(pawns[p].x, pawns[p].y, RIGHT)
+                    && !isPawned(pawns[p].x + 1, pawns[p].y)) {
+                legalMoves.add(new Point(pawns[p].x + 1, pawns[p].y));
+            }
+            else if (isPawned(pawns[p].x + 1, pawns[p].y)) {
+                jumpMoves(pawns[p].x + 1, pawns[p].y);
+            }
+        }
+        
+        // UP
+        if (pawns[p].y != 0) {
+            if (!isWalled(pawns[p].x, pawns[p].y, UP)
+                    && !isPawned(pawns[p].x, pawns[p].y - 1)) {
+                legalMoves.add(new Point(pawns[p].x, pawns[p].y - 1));
+            }
+            else if (isPawned(pawns[p].x, pawns[p].y - 1)) {
+                jumpMoves(pawns[p].x, pawns[p].y - 1);
+            }
+        }
+        
+        // DOWN
+        if (pawns[p].y != 8) {
+            if (!isWalled(pawns[p].x, pawns[p].y, DOWN)
+                    && !isPawned(pawns[p].x, pawns[p].y + 1)) {
+                legalMoves.add(new Point(pawns[p].x, pawns[p].y + 1));
+            }
+            else if (isPawned(pawns[p].x, pawns[p].y + 1)) {
+                jumpMoves(pawns[p].x, pawns[p].y + 1);
+            }
+        }
 		
 		// add jumping logic here
 		
 		Point[] legalArray = new Point[legalMoves.size()];
 		legalArray = legalMoves.toArray(legalArray);
+		legalMoves.clear();
 		
 		return legalArray;
 	}
@@ -416,6 +444,50 @@ public class QDState extends GameState
 		}
 		
 		return false;
+	}
+	
+	private void jumpMoves(int x, int y) {
+		// Lots of redundancies. Fix later.
+		
+        // LEFT
+        if (x != 0) {
+            if (!isWalled(x, y, LEFT)
+                    && !isPawned(x - 1, y)) {
+                legalMoves.add(new Point(x - 1, y));
+            }
+        }
+        
+        // RIGHT
+        if (x != 8) {
+            if (!isWalled(x, y, RIGHT)
+                    && !isPawned(x + 1, y)) {
+                legalMoves.add(new Point(x + 1, y));
+            }
+        }
+        
+        // UP
+        if (y != 0) {
+            if (!isWalled(x, y, UP)
+                    && !isPawned(x, y - 1)) {
+                legalMoves.add(new Point(x, y - 1));
+            }
+        }
+        
+        // DOWN
+        if (y != 8) {
+            if (!isWalled(x, y, DOWN)
+                    && !isPawned(x, y + 1)) {
+                legalMoves.add(new Point(x, y + 1));
+            }
+        }
+	}
+	
+	public boolean placePawnManually(int p, int x, int y) {
+		if (p >= pawns.length || x >= 9 || y >= 9 || x < 0 || y < 0) { return false; }
+    	
+    	pawns[p] = new Point(x,y);
+
+    	return true;
 	}
     
     public void nextTurn() {
