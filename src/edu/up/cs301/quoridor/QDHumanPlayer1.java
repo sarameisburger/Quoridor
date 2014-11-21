@@ -749,7 +749,8 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 			wallMode = true;
 			return true; 
 		}
-		return false; 
+		else {wallMode = false; }
+		return wallMode;
 	}
 
 	public Point mapPixeltoIntersections(float x, float y){
