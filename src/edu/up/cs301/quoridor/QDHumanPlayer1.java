@@ -746,12 +746,12 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 		int width = pieceSize * boardSize - margin; 
 
 		//iterate through intersections
-		for (int i = 1; i < boardSize ; i++ ){
+		for (int i = 0; i < boardSize ; i++ ){
 			//check within x boundaries 
-			if (x >= (pieceSize * i - margin) && x <= pieceSize * i + margin + margin){
-				for (int j = 1; j < boardSize; j++){
+			if (x >= (pieceSize * (i + 1) - (2 *margin)) && x <= pieceSize * (i+1) + margin + (2 *margin)){
+				for (int j = 0; j < boardSize; j++){
 					//check within y boundaries 
-					if (y >= (pieceSize * j - margin) && y <= pieceSize * j + margin + margin){
+					if (y >= (pieceSize * (j +1) - (2 *margin)) && y <= pieceSize * (j+1) + margin + (2 *margin)){
 						Point p = new Point(i, j); 
 						return p; 
 					}
