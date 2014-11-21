@@ -60,7 +60,7 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 	private int OPAQUE; //create an invisible color
 	private int pawnSize; //size of pawns
 	private boolean wallMode; //whether or not we are in wall mode 
-	private int wallOri; //orientation of wall --dependent on wall mode 
+	private int wallOri = QDState.HORIZONTAL; //orientation of wall --dependent on wall mode 
 
 	// the game's state
 	protected QDState state;
@@ -516,18 +516,30 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 		//float y = (float) event.getY();
 		float x = (float)event.getX();
 		float y = (float) event.getY();
+		makeWallMode(x, y);
 		Point p = mapPixelToSquare(x, y);
+		Point q = mapPixeltoIntersections(x,y); 
 
 		// if the location did not map to a legal square, flash
 		// the screen; otherwise, create and send an action to
 		// the game
-		if (p == null) {
-			//dont do anything if touch not in playing field
-		} else {
+		if (p != null && !wallMode) {
+			//attempt pawn move
 			QDMovePawnAction action = new QDMovePawnAction(this, p.x, p.y);
 			//QDMovePawnAction action = new QDMovePawnAction(this, 4, 7);
 			Log.i("onTouch", "Human player sending TTTMA ...");
 			game.sendAction(action);
+		} else if (wallMode && q != null)
+		{
+			//make wall move action
+			//check if it's legal
+			if(state.canPlaceWall(0, q.x, q.y, wallOri))
+			{
+				//move is legal, so we'll send the action, which we know will go through
+				//reset wallMode to false for the next turn, otherwise we'll be stuck
+				wallMode = false;
+				game.sendAction(new QDMoveWallAction(this, q.x, q.y, wallOri));
+			}
 		}
 		//}
 
@@ -679,11 +691,18 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 	 *         number of square at that point
 	 */
 
-	public boolean mapPixelToWall(float x, float y){
+	public boolean makeWallMode(float x, float y){
 		int width = pieceSize * boardSize - margin;
 
 		//iterate through intersections to see where it is located
 		if (x >= wallStartX && x <= wallStartX + (pieceSize * 2) && y >= wallStartY && y <= wallStartY + (pieceSize* 2)){
+			if (wallMode)
+			{
+				//wallMode is already true, so now, we just switch between orientations
+				if(wallOri == QDState.HORIZONTAL) {wallOri = QDState.VERTICAL;}
+				else if (wallOri == QDState.VERTICAL) {wallOri = QDState.HORIZONTAL;}
+			}
+			wallMode = true;
 			return true; 
 		}
 		return false; 
@@ -705,9 +724,7 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 					}
 				}
 			}
-
 		}
-
 		return null; 
 	}
 
