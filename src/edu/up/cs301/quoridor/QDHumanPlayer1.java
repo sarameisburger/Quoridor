@@ -290,13 +290,18 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 			if(pawns.length == 2){
 				
 				if(wallOri == QDState.HORIZONTAL){
-
+					if (wallMode){
+				paint.setColor(highlight);
+				g.drawRect(wallStartX-margin, wallStartY-margin, (pieceSize*2)+wallStartX+margin, wallStartY+wallWidth+margin, paint);
+				g.drawRect(wallStartX-margin, 2*wallStartY-margin, (pieceSize*2)+wallStartX+margin, 2*wallStartY+wallWidth+margin, paint);
+					}
 				paint.setTextSize(50); //set font size
 
 				wallBrown = Color.rgb(153, 76, 0);//make walls brown
 				paint.setColor(wallBrown);//set color to brown
 
 				//draw 2 stacks of walls
+				
 				g.drawRect(wallStartX, wallStartY, (pieceSize*2)+wallStartX, wallStartY+wallWidth, paint);
 				g.drawRect(wallStartX, 2*wallStartY, (pieceSize*2)+wallStartX, 2*wallStartY+wallWidth, paint);
 
@@ -315,8 +320,14 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 
 				paint.setColor(Color.YELLOW);
 				g.drawText(allPlayerNames[1], wallStartX+pieceSize, 2*wallStartY, paint);
+				
 				}
 				else{
+					if(wallMode){
+						paint.setColor(highlight);
+						g.drawRect(wallStartX-margin, wallStartY-margin, wallStartX+wallWidth+margin,(pieceSize*2)+wallStartY+margin, paint);
+						g.drawRect(wallStartX-margin, 3*wallStartY-margin, wallStartX+wallWidth+margin, (pieceSize*2)+3*wallStartY+margin, paint);
+					}
 					paint.setTextSize(50); //set font size
 
 					wallBrown = Color.rgb(153, 76, 0);//make walls brown
