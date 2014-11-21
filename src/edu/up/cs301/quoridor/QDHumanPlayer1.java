@@ -66,6 +66,7 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 	private int[] wallsRemain;
 	private Point[] legalPawnMoves;
 	private int[][] wallLoc;
+	//private int[][] wallInter;
 	private int p;
 
 	//Colors
@@ -133,6 +134,7 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 			wallsRemain = state.getWallsRem();
 			p = state.getWhoseMove();
 			legalPawnMoves = state.legalPawnMoves(p);
+			//wallInter = state.getWallsLoc();
 			Log.i("human player", "receiving");
 		}
 	}
@@ -359,10 +361,18 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 
 					g.drawRect(margin+(legalPawnMoves[k].x*pieceSize), margin+(legalPawnMoves[k].y*pieceSize), pieceSize+(legalPawnMoves[k].x*pieceSize), pieceSize+(legalPawnMoves[k].y*pieceSize), paint);
 				}
-				
+			///////////WALL TEST/////////////////
+				paint.setColor(wallBrown);
+				int d = 4;
+				int e = 4;
+				int y = 6;
+				int h = 6;
+				g.drawRect((d+1)*pieceSize-margin, ((e-1)*pieceSize)+(margin), (d+1)*pieceSize+2*margin, ((e+1)*pieceSize), paint);
+				g.drawRect(margin+((y-1)*pieceSize), ((h+1)*pieceSize)-(margin), ((y+1)*pieceSize), ((h+1)*pieceSize)+2*margin, paint);
 			//draw walls on board
 			//get the intersections from the state
 			int[][] wallInter = state.getIntersections();
+			if (wallInter != null){
 			for(int r = 0; r < wallInter.length; r++)
 			{
 				for(int c = 0; c < wallInter[r].length; c++)
@@ -372,13 +382,23 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 					{
 						//there's a horizontal wall here!
 						//draw it
+						paint.setColor(wallBrown);//set color to brown
+
+						//draw horizontal wall
+						g.drawRect(margin+((r-1)*pieceSize), ((c+1)*pieceSize)-(margin), ((r+1)*pieceSize), ((c+1)*pieceSize)+2*margin, paint);
+						
 					} else if (wallInter[r][c] == QDState.VERTICAL)
 					{
 						//there's a vertical wall here!
 						//draw it
+						paint.setColor(wallBrown);//set color to brown
+
+						//draw vertical wall 
+						g.drawRect((r+1)*pieceSize-margin, ((c-1)*pieceSize)+(margin), (r+1)*pieceSize+2*margin, ((c+1)*pieceSize), paint);
 					}
 					
 				}
+			}
 			}
 				
 				
