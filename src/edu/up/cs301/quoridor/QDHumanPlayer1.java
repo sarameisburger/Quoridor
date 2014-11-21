@@ -366,12 +366,12 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 				}
 				///////////WALL TEST/////////////////
 				paint.setColor(wallBrown);
-				int d = 4;
+				int d = 5;
 				int e = 4;
 				int y = 6;
 				int h = 6;
-				g.drawRect((d+1)*pieceSize-margin, ((e-1)*pieceSize)+(margin), (d+1)*pieceSize+2*margin, ((e+1)*pieceSize), paint);
-				g.drawRect(margin+((y-1)*pieceSize), ((h+1)*pieceSize)-(margin), ((y+1)*pieceSize), ((h+1)*pieceSize)+2*margin, paint);
+				//g.drawRect((d+1)*pieceSize-margin, ((e)*pieceSize)+(margin), (d+1)*pieceSize+2*margin, ((e+2)*pieceSize), paint);//v
+				//g.drawRect(margin+((y)*pieceSize), ((h+1)*pieceSize)-(margin), ((y+2)*pieceSize), ((h+1)*pieceSize)+2*margin, paint);//h
 				//draw walls on board
 				//get the intersections from the state
 				//wallInter[1][1]=QDState.HORIZONTAL;
@@ -390,7 +390,7 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 								paint.setColor(wallBrown);//set color to brown
 
 								//draw horizontal wall
-								g.drawRect(margin+((r-1)*pieceSize), ((c+1)*pieceSize)-(margin), ((r+1)*pieceSize), ((c+1)*pieceSize)+2*margin, paint);
+								g.drawRect(margin+((c)*pieceSize), ((r+1)*pieceSize)-(margin), ((c+2)*pieceSize), ((r+1)*pieceSize)+2*margin, paint);
 
 							} else if (wallInter[r][c] == QDState.VERTICAL)
 							{
@@ -399,7 +399,7 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 								paint.setColor(wallBrown);//set color to brown
 
 								//draw vertical wall 
-								g.drawRect((r+1)*pieceSize-margin, ((c-1)*pieceSize)+(margin), (r+1)*pieceSize+2*margin, ((c+1)*pieceSize), paint);
+								g.drawRect((c+1)*pieceSize-margin, ((r)*pieceSize)+(margin), (c+1)*pieceSize+2*margin, ((r+2)*pieceSize), paint);
 							}
 
 						}

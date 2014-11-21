@@ -81,16 +81,23 @@ public class QDState extends GameState
     	}
     	
     	//initialize wall intersections
-    	intersections = new int[8][8];
+    	//intersections = new int[8][8];
     	
     	// QD TODO: pawns based on number of players
 //    	players[players] = new GamePlayer();
     	// QD TODO: initialize empty wall array
     	wallLoc = new int[9][9];
+    	intersections = new int[8][8];
     	
     	for (int i = 0; i < wallLoc.length; i++) {
     		for (int j = 0; j < wallLoc[i].length; j++) {
     			wallLoc[i][j] = 0;
+    		}
+    	}
+    	
+    	for (int i = 0; i < intersections.length; i++) {
+    		for (int j = 0; j < intersections[i].length; j++) {
+    			intersections[i][j] = 0;
     		}
     	}
         
@@ -117,6 +124,8 @@ public class QDState extends GameState
     			wallLoc[i][j] = original.wallLoc[i][j];
     		}
     	}
+    	
+    	intersections = original.intersections;
     	
     	// copy the player-to-move information
         playerToMove = original.playerToMove;
@@ -269,7 +278,7 @@ public class QDState extends GameState
 //    	}
     	
     	// guard
-    	if (x > 7 || y > 7 || x < 0 || y < 0) { return false; }
+    	if (x >= wallLoc.length || y >= wallLoc[x].length || x < 0 || y < 0) { return false; }
     	
     	// Check legality (for the bazillionth time)
     	if (!canPlaceWall(p, x, y, dir)) { return false; }
