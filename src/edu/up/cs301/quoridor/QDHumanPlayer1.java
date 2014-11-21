@@ -288,6 +288,8 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 		if(wallsRemain != null){
 
 			if(pawns.length == 2){
+				
+				if(wallOri == QDState.HORIZONTAL){
 
 				paint.setTextSize(50); //set font size
 
@@ -313,7 +315,37 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 
 				paint.setColor(Color.YELLOW);
 				g.drawText(allPlayerNames[1], wallStartX+pieceSize, 2*wallStartY, paint);
-			}
+				}
+				else{
+					paint.setTextSize(50); //set font size
+
+					wallBrown = Color.rgb(153, 76, 0);//make walls brown
+					paint.setColor(wallBrown);//set color to brown
+
+					//draw 2 stacks of walls
+					g.drawRect(wallStartX, wallStartY, wallStartX+wallWidth,(pieceSize*2)+wallStartY, paint);
+					g.drawRect(wallStartX, 3*wallStartY, wallStartX+wallWidth, (pieceSize*2)+3*wallStartY, paint);
+
+					//get each players number of remaining walls	
+					text0 = String.valueOf(wallsRemain[0]);
+					text1 = String.valueOf(wallsRemain[1]);
+
+					//draw value of walls remaining for each player
+					paint.setColor(Color.BLACK);
+					g.drawText(text0, wallStartX+margin, wallStartY+pieceSize, paint);
+					g.drawText(text1, wallStartX+margin, 3*wallStartY+pieceSize, paint);
+
+					//write out player name in their pawn color
+					paint.setColor(Color.RED);
+					g.drawText(allPlayerNames[0], wallStartX+pieceSize+margin, wallStartY+pieceSize, paint);
+
+					paint.setColor(Color.YELLOW);
+					g.drawText(allPlayerNames[1], wallStartX+pieceSize+margin, 3*wallStartY+pieceSize, paint);
+					}
+			
+				}
+				
+			
 			else if(pawns.length == 4){
 
 				paint.setTextSize(50); 
@@ -353,6 +385,7 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 				paint.setColor(Color.BLUE);
 				g.drawText(allPlayerNames[3], wallStartX+pieceSize, 4*wallStartY, paint);
 			}
+		}
 
 			//highlight valid moves
 			highlight = Color.argb(100,243,249,69);
@@ -432,7 +465,7 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 				}
 			}
 		}
-	}
+	
 
 	/**
 	 * helper-method to convert from a percentage to a horizontal pixel location
