@@ -419,6 +419,11 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 				//draw walls on board
 				//get the intersections from the state
 				//wallInter[1][1]=QDState.HORIZONTAL;
+				
+				//place wall box
+				//paint.setColor(Color.RED);
+				//g.drawRect(800, 100, 900, 200, paint);
+				//g.drawText("Place Wall", 800, 200, paint);
 
 				if (wallInter != null){	
 
@@ -740,16 +745,23 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 
 		//iterate through intersections to see where it is located
 		if (x >= wallStartX && x <= wallStartX + (pieceSize * 2) && y >= wallStartY && y <= wallStartY + (pieceSize* 2)){
+		
 			if (wallMode)
 			{
 				//wallMode is already true, so now, we just switch between orientations
 				if(wallOri == QDState.HORIZONTAL) {wallOri = QDState.VERTICAL;}
 				else if (wallOri == QDState.VERTICAL) {wallOri = QDState.HORIZONTAL;}
+				//wallMode = false;
 			}
-			wallMode = true;
-			return true; 
+			wallMode = false;
+			return wallMode; 
 		}
-		else {wallMode = false; }
+		else {wallMode = true; }
+//		if(wallMode){
+//			if(wallOri == QDState.HORIZONTAL) {wallOri = QDState.VERTICAL;}
+//			else if (wallOri == QDState.VERTICAL) {wallOri = QDState.HORIZONTAL;}
+//			
+//		}
 		return wallMode;
 	}
 
