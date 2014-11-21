@@ -18,16 +18,12 @@ public class QDLocalGame extends LocalGame implements QDGame {
 
 	// the game's state
 	protected QDState state;
-
-	// the marks for player 0 and player 1, respectively
-	private final static char[] mark = {'X','O'};
-
+	
 	// the number of moves that have been played so far, used to
 	// determine whether the game is over
 	protected int moveCount;
 	
 	private Point[] pawns;
-
 
 	/**
 	 * Constructor for the TTTLocalGame.
@@ -57,30 +53,30 @@ public class QDLocalGame extends LocalGame implements QDGame {
 		//iterate through pawns on the board
 		for (int i = 0; i < pawns.length; i++){
 			//check to see if each pawn has reached it winning x, y values 
-			if (i == 0){ //if pawn 0
+			if (i == 0){ //if pawn 1
 				if (pawns[i].y == 0){
 					resultStr = "Player: " + (i + 1) + " is the winner"; 
 				}
 			}
-			if (i == 1){ //if pawn 1
+			if (i == 1){ //if pawn 2
 				if (pawns[i].y == 8){
 					resultStr = "Player: " + (i + 1) + " is the winner"; 
 				}
 			}
-			if (i == 2){
-				if (pawns[i].y == 4){
+			if (i == 2){ //if pawn 3
+				if (pawns[i].x == 8){
 					resultStr = "Player: " + (i + 1) + " is the winner"; 
 				}
 			}
-			if (i == 3){
-				if (pawns[i].y == 4){
+			if (i == 3){ //pawn 4
+				if (pawns[i].x == 0){
 					resultStr = "Player: " + (i + 1) + " is the winner"; 
 				}
 			}
 		}
 		
 		if (resultStr == ""){return null;}
-		
+
 		return resultStr; 
 	}
 
