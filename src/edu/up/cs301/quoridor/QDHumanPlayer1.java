@@ -56,9 +56,11 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 	private int pieceLength; //total board size divided by number of pieces
 	private int pieceSize; //size of each piece of the  board
 	//public static Board model; //get the static board from the main class
-	private Paint paint = new Paint(); //create new pain object
+	private Paint paint = new Paint(); //create new paint object
 	private int OPAQUE; //create an invisible color
 	private int pawnSize; //size of pawns
+	private boolean wallMode; //whether or not we are in wall mode 
+	private int wallOri; //orientation of wall --dependent on wall mode 
 
 	// the game's state
 	protected QDState state;
@@ -604,6 +606,7 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 	}
 
 	/**
+	 * 
 	 * helper-method to create a scaled polygon (Path) object from a list of points
 	 * 
 	 * @param xPoints
@@ -676,6 +679,38 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 	 *         number of square at that point
 	 */
 
+	public boolean mapPixelToWall(float x, float y){
+		int width = pieceSize * boardSize - margin;
+
+		//iterate through intersections to see where it is located
+		if (x >= wallStartX && x <= wallStartX + (pieceSize * 2) && y >= wallStartY && y <= wallStartY + (pieceSize* 2)){
+			return true; 
+		}
+		return false; 
+	}
+
+	public Point mapPixeltoIntersections(float x, float y){
+
+		int width = pieceSize * boardSize - margin; 
+
+		//iterate through intersections
+		for (int i = 1; i < boardSize ; i++ ){
+			//check within x boundaries 
+			if (x >= (pieceSize * i) && x <= pieceSize * i + margin){
+				for (int j = 1; j < boardSize; j++){
+					//check within y boundaries 
+					if (y >= (pieceSize * j) && y <= pieceSize * j + margin){
+						Point p = new Point(i, j); 
+						return p; 
+					}
+				}
+			}
+
+		}
+
+		return null; 
+	}
+
 	@SuppressWarnings("null")
 	public Point mapPixelToSquare(float x, float y) 
 	{
@@ -685,12 +720,12 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 		int width = pieceSize * boardSize - margin;
 
 		//iterate through all tile spaces, see where it is located
-		for(int i = 0; i < boardSize + 1; i++)
+		for(int i = 0; i < boardSize ; i++)
 		{
 			//Is the x within the boundaries?
 			if(x > margin + i * (pieceSize) && x < (i + 1) * pieceSize)
 			{
-				for(int j = 0; j < boardSize + 1; j++)
+				for(int j = 0; j < boardSize ; j++)
 				{
 					//tile number for current space
 					//int l = model.getTiles()[i][j];
