@@ -58,23 +58,23 @@ public class QDLocalGame extends LocalGame implements QDGame {
 		for (int i = 0; i < pawns.length; i++){
 			//check to see if each pawn has reached it winning x, y values 
 			if (i == 0){ //if pawn 0
-				if (pawns[i].x == 4 && pawns[i].y == 0){
-					resultStr = "Player: " + (i + 1) + "is the winner"; 
+				if (pawns[i].y == 0){
+					resultStr = "Player: " + (i + 1) + " is the winner"; 
 				}
 			}
 			if (i == 1){ //if pawn 1
-				if (pawns[i].x == 4 && pawns[i].y == 8){
-					resultStr = "Player: " + (i + 1) + "is the winner"; 
+				if (pawns[i].y == 8){
+					resultStr = "Player: " + (i + 1) + " is the winner"; 
 				}
 			}
 			if (i == 2){
-				if (pawns[i].x == 8 && pawns[i].y == 4){
-					resultStr = "Player: " + (i + 1) + "is the winner"; 
+				if (pawns[i].y == 4){
+					resultStr = "Player: " + (i + 1) + " is the winner"; 
 				}
 			}
 			if (i == 3){
-				if (pawns[i].x == 0 && pawns[i].y == 4){
-					resultStr = "Player: " + (i + 1) + "is the winner"; 
+				if (pawns[i].y == 4){
+					resultStr = "Player: " + (i + 1) + " is the winner"; 
 				}
 			}
 		}
