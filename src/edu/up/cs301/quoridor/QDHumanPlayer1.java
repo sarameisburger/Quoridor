@@ -512,8 +512,8 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 		// values are in the range 0..2)
 		//float x = (float) event.getX();
 		//float y = (float) event.getY();
-		int x = (int)event.getX();
-		int y = (int) event.getY();
+		float x = (float)event.getX();
+		float y = (float) event.getY();
 		Point p = mapPixelToSquare(x, y);
 
 		// if the location did not map to a legal square, flash
@@ -685,18 +685,18 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 		int width = pieceSize * boardSize - margin;
 
 		//iterate through all tile spaces, see where it is located
-		for(int i = 0; i < width; i++)
+		for(int i = 0; i < boardSize + 1; i++)
 		{
 			//Is the x within the boundaries?
-			if(x > margin + i * (pieceSize) && x < margin + (i + 1) * pieceLength + i * margin)
+			if(x > margin + i * (pieceSize) && x < (i + 1) * pieceSize)
 			{
-				for(int j = 0; j < width; j++)
+				for(int j = 0; j < boardSize + 1; j++)
 				{
 					//tile number for current space
 					//int l = model.getTiles()[i][j];
 
 					//Since is it within the x boundary, is it within the y boundary?
-					if(y > margin + j * (pieceSize) && y < margin + (j + 1) * pieceLength + j * margin)
+					if(y > margin + j * (pieceSize) && y < (j + 1) * pieceSize)
 					{
 						//within boundary
 						//Now: Is it a valid move?
@@ -706,9 +706,9 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 						//}
 						//test by changing square to 0, which should turn it black when surface.invalidate is called
 						//model.setTiles(i, j, 0);
-						Point p = new Point(0,0);
-						p.x = i;
-						p.y = j;
+						Point p = new Point(i, j);
+						//p.x = i;
+						//p.y = j;
 						return p;
 					}
 				}

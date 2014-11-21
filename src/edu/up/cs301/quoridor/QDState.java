@@ -243,7 +243,7 @@ public class QDState extends GameState
     
     public boolean movePawn(int p, int x, int y) {
     	// Initial bounds check
-    	if (p >= pawns.length || x >= 8 || y >= 8 || x < 0 || y < 0) { return false; }
+    	if (p >= pawns.length || x >= 9 || y >= 9 || x < 0 || y < 0) { return false; }
     	
     	// Check through legal moves, make the move if legal
     	Point[] legalMoves = legalPawnMoves(p);
