@@ -565,7 +565,7 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 		//float y = (float) event.getY();
 		float x = (float)event.getX();
 		float y = (float) event.getY();
-		makeWallMode(x, y);
+		mapPixelToWallStack(x, y);
 		Point p = mapPixelToSquare(x, y);
 		Point q = mapPixeltoIntersections(x,y); 
 
@@ -740,28 +740,27 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 	 *         number of square at that point
 	 */
 
-	public boolean makeWallMode(float x, float y){
+	public boolean mapPixelToWallStack(float x, float y){
 		int width = pieceSize * boardSize - margin;
 
-		//iterate through intersections to see where it is located
-		if (x >= wallStartX && x <= wallStartX + (pieceSize * 2) && y >= wallStartY && y <= wallStartY + (pieceSize* 2)){
+		//check if user has touched on wall stack
+		if (x >= wallStartX && x <= wallStartX + (pieceSize * 5) && y >= wallStartY && y <= wallStartY + (pieceSize* 5)){
 		
-			if (wallMode)
-			{
+			if (!wallMode){
+				wallMode = true;
+			}
+			else if (wallMode && wallOri == QDState.HORIZONTAL){
 				//wallMode is already true, so now, we just switch between orientations
-				if(wallOri == QDState.HORIZONTAL) {wallOri = QDState.VERTICAL;}
-				else if (wallOri == QDState.VERTICAL) {wallOri = QDState.HORIZONTAL;}
+				//if(wallOri == QDState.HORIZONTAL) {wallOri = QDState.VERTICAL;}
+				//else if (wallOri == QDState.VERTICAL) {wallOri = QDState.HORIZONTAL;}
+				wallOri = QDState.VERTICAL;
 				//wallMode = false;
 			}
-			wallMode = false;
-			return wallMode; 
+			else if (wallMode && wallOri == QDState.VERTICAL){
+				wallOri = QDState.HORIZONTAL;
+				wallMode = false;
+			}
 		}
-		else {wallMode = true; }
-//		if(wallMode){
-//			if(wallOri == QDState.HORIZONTAL) {wallOri = QDState.VERTICAL;}
-//			else if (wallOri == QDState.VERTICAL) {wallOri = QDState.HORIZONTAL;}
-//			
-//		}
 		return wallMode;
 	}
 
@@ -772,10 +771,10 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 		//iterate through intersections
 		for (int i = 0; i < boardSize ; i++ ){
 			//check within x boundaries 
-			if (x >= (pieceSize * (i + 1) - (2 *margin)) && x <= pieceSize * (i+1) + margin + (2 *margin)){
+			if (x >= (pieceSize * (i + 1) - (3 *margin)) && x <= pieceSize * (i+1) + margin + (3 *margin)){
 				for (int j = 0; j < boardSize; j++){
 					//check within y boundaries 
-					if (y >= (pieceSize * (j +1) - (2 *margin)) && y <= pieceSize * (j+1) + margin + (2 *margin)){
+					if (y >= (pieceSize * (j +1) - (3 *margin)) && y <= pieceSize * (j+1) + margin + (3 *margin)){
 						Point p = new Point(i, j); 
 						return p; 
 					}
