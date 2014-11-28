@@ -179,7 +179,7 @@ public class QDState extends GameState
 
 	public boolean isWalled(int x, int y, int dir) {
 		// guard
-		if (x > 7 || y > 7 || x < 0 || y < 0) { return false; }
+		if (x >= wallLoc.length || y >= wallLoc[x].length || x < 0 || y < 0) { return false; }
 
 		return (wallLoc[y][x] & dir) == dir; 
 		//    	return false;
