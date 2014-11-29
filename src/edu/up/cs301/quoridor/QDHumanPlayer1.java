@@ -400,6 +400,7 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 
 			//highlight valid moves
 			highlight = Color.argb(100,243,249,69);
+			//highlight = Color.argb(100, 2, 170, 200);
 
 			if (legalPawnMoves != null){
 				for (int k = 0; k < legalPawnMoves.length; k++){
