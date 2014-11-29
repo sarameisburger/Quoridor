@@ -1,6 +1,7 @@
 package edu.up.cs301.quoridor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import android.graphics.Point;
 import android.util.Log;
@@ -33,6 +34,7 @@ public class QDState extends GameState
 
 	// the mysterious wall array
 	private int[][] wallLoc;
+	private int[][] wallLocTemp;
 
 	// each player's remaining walls
 	private int[] wallRem;
@@ -46,6 +48,9 @@ public class QDState extends GameState
 	// Legal pawn moves per player, not safe
 	// to directly access. Don't do it.
 	private ArrayList<Point> legalMoves;
+	
+	// Filled paths for winnablity checking
+	private boolean filledPath[][];
 
 	// Constants
 	public static final int EMPTY = 0;
@@ -87,11 +92,13 @@ public class QDState extends GameState
 		//    	players[players] = new GamePlayer();
 		// QD TODO: initialize empty wall array
 		wallLoc = new int[9][9];
+		wallLocTemp = new int[9][9];
 		intersections = new int[8][8];
 
 		for (int i = 0; i < wallLoc.length; i++) {
 			for (int j = 0; j < wallLoc[i].length; j++) {
 				wallLoc[i][j] = 0;
+				wallLocTemp[i][j] = 0;
 			}
 		}
 
@@ -100,13 +107,18 @@ public class QDState extends GameState
 				intersections[i][j] = 0;
 			}
 		}
+		
+		// Array used for winablity checking
+		filledPath = new boolean[wallLoc.length][wallLoc[0].length];
+		
+//		wallLocTemp = wallLoc.clone();
 
 		// make it player 0's move
 		playerToMove = 0;
 	}// constructor
 
 	/**
-	 * Copy constructor for class TTTState
+	 * Copy constructor for class QDState
 	 *  
 	 * @param original
 	 * 		the TTTState object that we want to clong
@@ -122,10 +134,13 @@ public class QDState extends GameState
 		for (int i = 0; i < wallLoc.length; i++) {
 			for (int j = 0; j < wallLoc.length; j++) {
 				wallLoc[i][j] = original.wallLoc[i][j];
+				wallLocTemp[i][j] = original.wallLocTemp[i][j];
 			}
 		}
 
 		intersections = original.intersections;
+		
+		filledPath = original.filledPath;
 
 		// copy the player-to-move information
 		playerToMove = original.playerToMove;
@@ -179,7 +194,7 @@ public class QDState extends GameState
 
 	public boolean isWalled(int x, int y, int dir) {
 		// guard
-		if (x >= wallLoc.length || y >= wallLoc[x].length || x < 0 || y < 0) { return false; }
+		if (x < 0 || y < 0 || x >= wallLoc.length || y >= wallLoc[x].length) { return false; }
 
 		return (wallLoc[y][x] & dir) == dir; 
 		//    	return false;
@@ -282,6 +297,12 @@ public class QDState extends GameState
 
 		// Check legality (for the bazillionth time)
 		if (!canPlaceWall(p, x, y, dir)) { return false; }
+		
+//		wallLocTemp = Arrays.copyOf(wallLoc, wallLoc.length);
+		
+		for (int i = 0; i < wallLoc.length; i++) {
+			System.arraycopy(wallLoc[i], 0, wallLocTemp[i], 0, wallLoc[i].length); 
+		}
 
 		if (dir == VERTICAL) {
 			// Double check a wall isn't already there
@@ -309,6 +330,14 @@ public class QDState extends GameState
 			wallLoc[y][x+1] |= DOWN;
 			wallLoc[y+1][x] |= UP;
 			wallLoc[y+1][x+1] |= UP;
+		}
+		
+		if (!isWinnableForAll()) {
+			for (int i = 0; i < wallLocTemp.length; i++) {
+				System.arraycopy(wallLocTemp[i], 0, wallLoc[i], 0, wallLoc[i].length); 
+			}
+			Log.w("winnable", "Not winnable for all, no wall");
+			return false;
 		}
 
 		wallRem[p]--;
@@ -350,9 +379,11 @@ public class QDState extends GameState
 
 		// And does the player have any walls remaining?
 		if (getWallsRem()[p] == 0) { return false; }
-
-		// TODO Check for blocking path to goal
-
+		
+		// Finally, check if this placement blocks any players from winning
+		
+//		return isWinnableForAll();
+		
 		return true;
 	}
 
@@ -407,6 +438,55 @@ public class QDState extends GameState
 	//		
 	//		return true;
 	//	}
+	
+	/**
+	 * isWinnable
+	 * 
+	 * Returns true or false based on if the player given is
+	 * still able to win. Used to check for wall placement legality.
+	 * That is, blocking a player in is illegal.
+	 * 
+	 * @param player
+	 * @return true if the player is able to win
+	 */
+	public boolean isWinnable(int p) {
+		// guard
+		if (p < 0 || p >= pawns.length) { return false; }
+		
+		Log.w("winnable", "Starting check");
+		
+		int goal = p == 0 ? 0 : 8;
+		
+		filledPath = new boolean[wallLoc.length][wallLoc[0].length];
+		
+		fillPath(pawns[p].x, pawns[p].y);
+		
+		for (boolean b : filledPath[goal]) {
+			if (b) {
+				Log.w("winnable", "Player "+p+" can win");
+				return true; }
+		}
+		
+		Log.w("winnable", "Player "+p+" can't win");
+		return false;
+	}
+	
+	/**
+	 * isWinnableForAll
+	 * 
+	 * Calls isWinnable for each player.
+	 * 
+	 * @return true if all players can win
+	 */
+	public boolean isWinnableForAll() {
+		for (int p = 0; p < pawns.length; p++) {
+			if (!isWinnable(p)) { return false; }
+		}
+		
+		Log.w("winnable", "All players winnable");
+		
+		return true;
+	}
 
 	public Point[] legalPawnMoves(int p) {
 		// player valid?
@@ -479,42 +559,6 @@ public class QDState extends GameState
 		return false;
 	}
 
-	private void jumpMoves(int x, int y) {
-		// Lots of redundancies. Fix later.
-
-		// LEFT
-		if (x != 0) {
-			if (!isWalled(x, y, LEFT)
-					&& !isPawned(x - 1, y)) {
-				legalMoves.add(new Point(x - 1, y));
-			}
-		}
-
-		// RIGHT
-		if (x != 8) {
-			if (!isWalled(x, y, RIGHT)
-					&& !isPawned(x + 1, y)) {
-				legalMoves.add(new Point(x + 1, y));
-			}
-		}
-
-		// UP
-		if (y != 0) {
-			if (!isWalled(x, y, UP)
-					&& !isPawned(x, y - 1)) {
-				legalMoves.add(new Point(x, y - 1));
-			}
-		}
-
-		// DOWN
-		if (y != 8) {
-			if (!isWalled(x, y, DOWN)
-					&& !isPawned(x, y + 1)) {
-				legalMoves.add(new Point(x, y + 1));
-			}
-		}
-	}
-
 	public boolean placePawnManually(int p, int x, int y) {
 		if (p >= pawns.length || x >= 9 || y >= 9 || x < 0 || y < 0) { return false; }
 
@@ -534,5 +578,93 @@ public class QDState extends GameState
 
 	public QDState makeCopy() {
 		return this;
+	}
+	
+	private void fillPath(int x, int y) {
+		// 1. If the color of node is not equal to target-color, return.
+		// 2. Set the color of node to replacement-color.
+		// 3. Perform Flood-fill (one step to the west of node, target-color, replacement-color).
+		//    Perform Flood-fill (one step to the east of node, target-color, replacement-color).
+		//    Perform Flood-fill (one step to the north of node, target-color, replacement-color).
+		//    Perform Flood-fill (one step to the south of node, target-color, replacement-color).
+		// 4. Return.
+		
+		
+		if (y < 0 || y >= filledPath.length)    { return; }
+		if (x < 0 || x >= filledPath[y].length) { return; }
+		
+		if(filledPath[y][x]) { return; }
+		
+		filledPath[y][x] = true;
+		
+        // LEFT
+        if (x != 0) {
+            if (!isWalled(x, y, LEFT)
+                    && !isPawned(x - 1, y)) {
+                fillPath(x - 1, y);
+            }
+        }
+        
+        // RIGHT
+        if (x != 8) {
+            if (!isWalled(x, y, RIGHT)
+                    && !isPawned(x + 1, y)) {
+                fillPath(x + 1, y);
+            }
+        }
+        
+        // UP
+        if (y != 0) {
+            if (!isWalled(x, y, UP)
+                    && !isPawned(x, y - 1)) {
+                fillPath(x, y - 1);
+            }
+        }
+        
+        // DOWN
+        if (y != 8) {
+            if (!isWalled(x, y, DOWN)
+                    && !isPawned(x, y + 1)) {
+                fillPath(x, y + 1);
+            }
+        }
+		
+		return;
+	}
+
+	private void jumpMoves(int x, int y) {
+		// Lots of redundancies. Fix later.
+	
+		// LEFT
+		if (x != 0) {
+			if (!isWalled(x, y, LEFT)
+					&& !isPawned(x - 1, y)) {
+				legalMoves.add(new Point(x - 1, y));
+			}
+		}
+	
+		// RIGHT
+		if (x != 8) {
+			if (!isWalled(x, y, RIGHT)
+					&& !isPawned(x + 1, y)) {
+				legalMoves.add(new Point(x + 1, y));
+			}
+		}
+	
+		// UP
+		if (y != 0) {
+			if (!isWalled(x, y, UP)
+					&& !isPawned(x, y - 1)) {
+				legalMoves.add(new Point(x, y - 1));
+			}
+		}
+	
+		// DOWN
+		if (y != 8) {
+			if (!isWalled(x, y, DOWN)
+					&& !isPawned(x, y + 1)) {
+				legalMoves.add(new Point(x, y + 1));
+			}
+		}
 	}
 }
