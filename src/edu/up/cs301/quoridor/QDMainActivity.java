@@ -27,24 +27,10 @@ public class QDMainActivity extends GameMainActivity {
 		// Define the allowed player types
 		ArrayList<GamePlayerType> playerTypes = new ArrayList<GamePlayerType>();
 		
-		// yellow-on-blue GUI
-		playerTypes.add(new GamePlayerType("Local Human Player (blue-yellow)") {
+		// Normal GUI
+		playerTypes.add(new GamePlayerType("Local Human Player") {
 			public GamePlayer createPlayer(String name) {
 				return new QDHumanPlayer1(name);
-			}
-		});
-		
-		// red-on-yellow GUI
-		playerTypes.add(new GamePlayerType("Local Human Player (yellow-red)") {
-			public GamePlayer createPlayer(String name) {
-				return new QDHumanPlayer2(name);
-			}
-		});
-		
-		// game of 33
-		playerTypes.add(new GamePlayerType("Local Human Player (game of 33)") {
-			public GamePlayer createPlayer(String name) {
-				return new QDHumanPlayer3(name);
 			}
 		});
 		
@@ -67,10 +53,10 @@ public class QDMainActivity extends GameMainActivity {
 
 		// Add the default players
 		defaultConfig.addPlayer("Human", 0); // yellow-on-blue GUI
-		defaultConfig.addPlayer("Computer", 3); // dumb computer player
+		defaultConfig.addPlayer("Computer", 1); // dumb computer player
 
 		// Set the initial information for the remote player
-		defaultConfig.setRemoteData("Remote Player", "", 1); // red-on-yellow GUI
+		defaultConfig.setRemoteData("Remote Player", "", 0); // red-on-yellow GUI
 		
 		//done!
 		return defaultConfig;
