@@ -15,15 +15,17 @@ import edu.up.cs301.quoridor.QDState;
  * @versio2 July 2013 
  */
 
-public class QDComputerPlayer1 extends QDComputerPlayer
+public class QDComputerPlayer2 extends QDComputerPlayer
 {
 
 	protected QDState state; 
 	protected Point[] moves; 
+	//private Point[] pawns;
+
 	/*
 	 * Constructor for the TTTComputerPlayer1 class
 	 */
-	public QDComputerPlayer1(String name) {
+	public QDComputerPlayer2(String name) {
 		// invoke superclass constructor
 		super(name); // invoke superclass constructor
 	}
@@ -52,12 +54,14 @@ public class QDComputerPlayer1 extends QDComputerPlayer
 		//otherwise, ComputearPlayer1's turn, so needs to make a move
 
 		//make it look like we're thinking
+		
+		int opponent; 
 		sleep(1000);
 
 		//randomly place pawn or wall
 		int piece;
 		//decide pawn or wall
-		int val = (int)(Math.random()*5);
+		int val = (int)(Math.random()*4);
 
 		if(val == 0){
 			piece = 0;
@@ -70,6 +74,15 @@ public class QDComputerPlayer1 extends QDComputerPlayer
 		//check if pawn or wall
 		if(piece == 0) {
 			//randomly choose any intersection
+			if (state.getPawns().length > 0) //getPawns.length == 2){
+				opponent = (int)(Math.random() * state.getPawns().length);
+				while (opponent == playerNum)
+				{
+					opponent = (int)(Math.random() * state.getPawns().length);
+
+				}
+			}
+		
 			int x = (int)(Math.random()*8);
 			int y = (int)(Math.random()*8);
 
@@ -88,7 +101,7 @@ public class QDComputerPlayer1 extends QDComputerPlayer
 			//move pawn instead
 			//first, get the legal moves from the state
 			this.state = (QDState) info;
-			moves = state.legalPawnMoves(playerNum); //???
+			moves = state.legalPawnMoves(1); //???
 
 			//randomly pick a valid move
 			if(moves != null)
