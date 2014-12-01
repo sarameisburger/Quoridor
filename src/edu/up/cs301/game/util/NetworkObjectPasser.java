@@ -248,7 +248,7 @@ public abstract class NetworkObjectPasser {
 						out.writeObject(obj);
 						success = true;
 					} catch (IOException e) {
-						Log.e("NetworkObjectPasser", "could not write object");
+						Log.e("NetworkObjectPasser", "could not write object (MsgRunnable)");
 					}
 				}
 				if (!success) {

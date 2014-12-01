@@ -18,6 +18,7 @@ import android.widget.TextView;
 import edu.up.cs301.animation.AnimationSurface;
 import edu.up.cs301.animation.Animator;
 import edu.up.cs301.game.GameMainActivity;
+import edu.up.cs301.game.ProxyGame;
 import edu.up.cs301.game.R;
 import edu.up.cs301.game.infoMsg.GameInfo;
 import edu.up.cs301.game.infoMsg.IllegalMoveInfo;
@@ -122,6 +123,7 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 	 */
 	@Override
 	public void receiveInfo(GameInfo info) {
+		Log.w("human player", "info is received at all");
 		if (info instanceof IllegalMoveInfo || info instanceof NotYourTurnInfo) {
 			// if the move was out of turn or otherwise illegal, flash the screen
 			surface.flash(Color.RED, 50);
@@ -219,7 +221,7 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 	 * knows what their game-position and opponents' names are.
 	 */
 	protected void initAfterReady() {
-		myActivity.setTitle("Sara is the best: "+allPlayerNames[0]+" vs. "+allPlayerNames[1]);
+		myActivity.setTitle("Quoridor: "+allPlayerNames[0]+" vs. "+allPlayerNames[1]);
 	}
 
 	/**
@@ -253,6 +255,9 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 
 		}
 		//draw pawns on board
+//		if (pawns == null) {
+//			Log.w("state null", "yes, yes it is");
+//		}
 		if (pawns != null){
 
 			//if there are two players, only draw two pawns
@@ -577,7 +582,7 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 			//attempt pawn move
 			QDMovePawnAction action = new QDMovePawnAction(this, p.x, p.y);
 			//QDMovePawnAction action = new QDMovePawnAction(this, 4, 7);
-			Log.i("onTouch", "Human player sending TTTMA ...");
+			Log.i("onTouch", "Human player sending QDMA ...");
 			game.sendAction(action);
 		} else if (wallMode && q != null)
 		{
