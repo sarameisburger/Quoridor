@@ -189,6 +189,20 @@ public class QDComputerPlayer2 extends QDComputerPlayer
 			//randomly pick a valid move
 			if(moves != null)
 			{
+				for(Point p: moves)
+				{
+					//make first move in right direction
+					if(playerNum == 0 && p.y < pawns[playerNum].y){
+						game.sendAction(new QDMovePawnAction(this, p.x, p.y));
+					} else if(playerNum == 1 && p.y > pawns[playerNum].y){
+						game.sendAction(new QDMovePawnAction(this, p.x, p.y));
+					} else if(playerNum == 2 && p.x > pawns[playerNum].x){
+						game.sendAction(new QDMovePawnAction(this, p.x, p.y));
+					} else if(playerNum == 3 && p.x < pawns[playerNum].x){
+						game.sendAction(new QDMovePawnAction(this, p.x, p.y));
+					}
+				}
+				//try to move forward mostly
 				int i = (int)(Math.random() * (moves.length));
 				game.sendAction(new QDMovePawnAction(this, moves[i].x, moves[i].y));
 			} else {
