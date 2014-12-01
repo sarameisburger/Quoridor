@@ -83,7 +83,7 @@ public class QDComputerPlayer2 extends QDComputerPlayer
 				}
 			}
 	
-
+			
 
 		int x = (int)(Math.random()*8);
 		int y = (int)(Math.random()*8);

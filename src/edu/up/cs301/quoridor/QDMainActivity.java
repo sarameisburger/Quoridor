@@ -58,7 +58,7 @@ public class QDMainActivity extends GameMainActivity {
 		// smarter computer player
 		playerTypes.add(new GamePlayerType("Computer Player (smart)") {
 			public GamePlayer createPlayer(String name) {
-				return new QDComputerPlayer1(name);
+				return new QDComputerPlayer2(name);
 			}
 		});
 
