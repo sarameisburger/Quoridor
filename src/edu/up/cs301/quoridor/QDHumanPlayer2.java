@@ -2,7 +2,6 @@ package edu.up.cs301.quoridor;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Point;
 
 
 /**
@@ -71,20 +70,20 @@ public class QDHumanPlayer2 extends QDHumanPlayer1
 //	 * @param y
 //	 * 		the y pixel-coordinate
 //	 * @return
-//	 *		a Point whose components are in the range 0-2, indicating the
+//	 *		a QDPoint whose components are in the range 0-2, indicating the
 //	 *		column and row of the corresponding square on the tic-tac-toe
 //	 * 		board, or null if the point does not correspond to a square
 //	 */
 //    @Override
-//	public Point mapPixelToSquare(float x, float y) {
+//	public QDPoint mapPixelToSquare(float x, float y) {
 //    	// user the superclass method, but invert the result because our
 //    	// view is upside-down
-//    	Point p = super.mapPixelToSquare(x, y);
+//    	QDPoint p = super.mapPixelToSquare(x, y);
 //    	if (p == null) {
 //    		return null;
 //    	}
 //    	else {
-//    		return new Point(2-p.x, 2-p.y);
+//    		return new QDPoint(2-p.x, 2-p.y);
 //    	}
 //    }
 }

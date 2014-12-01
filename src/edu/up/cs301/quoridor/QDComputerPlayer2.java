@@ -1,6 +1,5 @@
 package edu.up.cs301.quoridor;
 
-import android.graphics.Point;
 import edu.up.cs301.game.infoMsg.GameInfo;
 import edu.up.cs301.game.infoMsg.NotYourTurnInfo;
 import edu.up.cs301.quoridor.QDState;
@@ -19,10 +18,10 @@ public class QDComputerPlayer2 extends QDComputerPlayer
 {
 
 	protected QDState state; 
-	protected Point[] moves; 
-	private Point[] pawns;
+	protected QDPoint[] moves; 
+	private QDPoint[] pawns;
 
-	//private Point[] pawns;
+	//private QDPoint[] pawns;
 
 	/*
 	 * Constructor for the TTTComputerPlayer1 class
@@ -189,7 +188,7 @@ public class QDComputerPlayer2 extends QDComputerPlayer
 			//randomly pick a valid move
 			if(moves != null)
 			{
-				for(Point p: moves)
+				for(QDPoint p: moves)
 				{
 					//make first move in right direction
 					if(playerNum == 0 && p.y < pawns[playerNum].y){

@@ -3,7 +3,6 @@ package edu.up.cs301.quoridor;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import android.graphics.Point;
 import android.util.Log;
 import edu.up.cs301.game.GamePlayer;
 import edu.up.cs301.game.infoMsg.GameState;
@@ -30,7 +29,7 @@ public class QDState extends GameState
 	private int[][] intersections;
 
 	// the coordinates of the pawns
-	private Point[] pawns;
+	private QDPoint[] pawns;
 
 	// the mysterious wall array
 	private int[][] wallLoc;
@@ -47,7 +46,7 @@ public class QDState extends GameState
 
 	// Legal pawn moves per player, not safe
 	// to directly access. Don't do it.
-	private ArrayList<Point> legalMoves;
+	private ArrayList<QDPoint> legalMoves;
 	
 	// Filled paths for winnability checking
 	private boolean filledPath[][];
@@ -67,19 +66,19 @@ public class QDState extends GameState
 	 */
 	public QDState(int players)
 	{	
-		pawns = new Point[players];
+		pawns = new QDPoint[players];
 		wallRem = new int[players];
 
 		// Initialize pawns
 		if (pawns.length >= 2) {
-			pawns[0] = new Point(4,8);
-			pawns[1] = new Point(4,0);
+			pawns[0] = new QDPoint(4,8);
+			pawns[1] = new QDPoint(4,0);
 			wallRem[0] = 10;
 			wallRem[1] = 10;
 		}
 		if (pawns.length == 4) {
-			pawns[2] = new Point(0,4);
-			pawns[3] = new Point(8,4);
+			pawns[2] = new QDPoint(0,4);
+			pawns[3] = new QDPoint(8,4);
 			for (int i=0; i < wallRem.length; i++) {
 				wallRem[i] = 5;
 			}
@@ -152,7 +151,7 @@ public class QDState extends GameState
 	 * 
 	 * @return Locations of all pawns
 	 */
-	public Point[] getPawns() {
+	public QDPoint[] getPawns() {
 		return pawns;
 	}
 
@@ -210,20 +209,20 @@ public class QDState extends GameState
 	}
 
 	/**
-	 * Returns an array of Points of legal coordinates
+	 * Returns an array of QDPoints of legal coordinates
 	 * the player's pawn can move to.
 	 * 
 	 * @param p player to retrieve legal moves for
-	 * @return Array of Points of legal locations for player's
+	 * @return Array of QDPoints of legal locations for player's
 	 * 		   pawn to move it
 	 */
-	public Point[] legalPawnMoves(int p) {
+	public QDPoint[] legalPawnMoves(int p) {
 		// Player range guard. If it's not, return an empty
 		// point array.
-		if (p < 0 || p >= pawns.length) { return new Point[0]; }
+		if (p < 0 || p >= pawns.length) { return new QDPoint[0]; }
 	
 		// Fresh legalMoves ArrayList
-		legalMoves = new ArrayList<Point>();
+		legalMoves = new ArrayList<QDPoint>();
 	
 		// Check each direction of potential allowed moves
 		// If there is a bordering pawn, find legal jump
@@ -233,7 +232,7 @@ public class QDState extends GameState
 		if (pawns[p].x != 0) {
 			if (!isWalled(pawns[p].x, pawns[p].y, LEFT)
 					&& !isPawned(pawns[p].x - 1, pawns[p].y)) {
-				legalMoves.add(new Point(pawns[p].x - 1, pawns[p].y));
+				legalMoves.add(new QDPoint(pawns[p].x - 1, pawns[p].y));
 			}
 			else if (isPawned(pawns[p].x - 1, pawns[p].y)) {
 				jumpMoves(pawns[p].x - 1, pawns[p].y);
@@ -244,7 +243,7 @@ public class QDState extends GameState
 		if (pawns[p].x != 8) {
 			if (!isWalled(pawns[p].x, pawns[p].y, RIGHT)
 					&& !isPawned(pawns[p].x + 1, pawns[p].y)) {
-				legalMoves.add(new Point(pawns[p].x + 1, pawns[p].y));
+				legalMoves.add(new QDPoint(pawns[p].x + 1, pawns[p].y));
 			}
 			else if (isPawned(pawns[p].x + 1, pawns[p].y)) {
 				jumpMoves(pawns[p].x + 1, pawns[p].y);
@@ -255,7 +254,7 @@ public class QDState extends GameState
 		if (pawns[p].y != 0) {
 			if (!isWalled(pawns[p].x, pawns[p].y, UP)
 					&& !isPawned(pawns[p].x, pawns[p].y - 1)) {
-				legalMoves.add(new Point(pawns[p].x, pawns[p].y - 1));
+				legalMoves.add(new QDPoint(pawns[p].x, pawns[p].y - 1));
 			}
 			else if (isPawned(pawns[p].x, pawns[p].y - 1)) {
 				jumpMoves(pawns[p].x, pawns[p].y - 1);
@@ -266,7 +265,7 @@ public class QDState extends GameState
 		if (pawns[p].y != 8) {
 			if (!isWalled(pawns[p].x, pawns[p].y, DOWN)
 					&& !isPawned(pawns[p].x, pawns[p].y + 1)) {
-				legalMoves.add(new Point(pawns[p].x, pawns[p].y + 1));
+				legalMoves.add(new QDPoint(pawns[p].x, pawns[p].y + 1));
 			}
 			else if (isPawned(pawns[p].x, pawns[p].y + 1)) {
 				jumpMoves(pawns[p].x, pawns[p].y + 1);
@@ -274,7 +273,7 @@ public class QDState extends GameState
 		}
 	
 		// Convert ArrayList of legal moves to an Array for convenience.
-		Point[] legalArray = new Point[legalMoves.size()];
+		QDPoint[] legalArray = new QDPoint[legalMoves.size()];
 		legalArray = legalMoves.toArray(legalArray);
 		legalMoves.clear();
 	
@@ -373,7 +372,7 @@ public class QDState extends GameState
 	
 		// Check the coordinates of each pawn, return true
 		// if any match the given x and y
-		for (Point p : pawns) {
+		for (QDPoint p : pawns) {
 			if (p.x == x && p.y == y) { return true; }
 		}
 	
@@ -515,10 +514,10 @@ public class QDState extends GameState
 		}
 
 		// Check through legal moves, make the move if legal
-		Point[] legalMoves = legalPawnMoves(p);
-		for (Point move : legalMoves) {
+		QDPoint[] legalMoves = legalPawnMoves(p);
+		for (QDPoint move : legalMoves) {
 			if (move.x == x && move.y == y) {
-				pawns[p] = new Point(x,y);
+				pawns[p] = new QDPoint(x,y);
 				return true;
 			}
 		}
@@ -539,7 +538,7 @@ public class QDState extends GameState
 	public boolean placePawnManually(int p, int x, int y) {
 		if (p >= pawns.length || x >= 9 || y >= 9 || x < 0 || y < 0) { return false; }
 
-		pawns[p] = new Point(x,y);
+		pawns[p] = new QDPoint(x,y);
 
 		return true;
 	}
@@ -634,7 +633,7 @@ public class QDState extends GameState
 		if (x != 0) {
 			if (!isWalled(x, y, LEFT)
 					&& !isPawned(x - 1, y)) {
-				legalMoves.add(new Point(x - 1, y));
+				legalMoves.add(new QDPoint(x - 1, y));
 			}
 		}
 	
@@ -642,7 +641,7 @@ public class QDState extends GameState
 		if (x != 8) {
 			if (!isWalled(x, y, RIGHT)
 					&& !isPawned(x + 1, y)) {
-				legalMoves.add(new Point(x + 1, y));
+				legalMoves.add(new QDPoint(x + 1, y));
 			}
 		}
 	
@@ -650,7 +649,7 @@ public class QDState extends GameState
 		if (y != 0) {
 			if (!isWalled(x, y, UP)
 					&& !isPawned(x, y - 1)) {
-				legalMoves.add(new Point(x, y - 1));
+				legalMoves.add(new QDPoint(x, y - 1));
 			}
 		}
 	
@@ -658,7 +657,7 @@ public class QDState extends GameState
 		if (y != 8) {
 			if (!isWalled(x, y, DOWN)
 					&& !isPawned(x, y + 1)) {
-				legalMoves.add(new Point(x, y + 1));
+				legalMoves.add(new QDPoint(x, y + 1));
 			}
 		}
 	}

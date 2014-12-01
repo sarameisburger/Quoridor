@@ -1,6 +1,5 @@
 package edu.up.cs301.quoridor;
 
-import android.graphics.Point;
 import edu.up.cs301.game.GamePlayer;
 import edu.up.cs301.game.LocalGame;
 import edu.up.cs301.game.actionMsg.GameAction;
@@ -23,7 +22,7 @@ public class QDLocalGame extends LocalGame implements QDGame {
 	// determine whether the game is over
 	protected int moveCount;
 	
-	private Point[] pawns;
+	private QDPoint[] pawns;
 
 	/**
 	 * Constructor for the TTTLocalGame.

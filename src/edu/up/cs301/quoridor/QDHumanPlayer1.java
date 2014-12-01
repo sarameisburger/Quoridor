@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Point;
 import android.graphics.RectF;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -65,9 +64,9 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 
 	// the game's state
 	protected QDState state;
-	private Point[] pawns;
+	private QDPoint[] pawns;
 	private int[] wallsRemain;
-	private Point[] legalPawnMoves;
+	private QDPoint[] legalPawnMoves;
 	private int[][] wallInter = new int[8][8];
 	//private int[][] wallInter;
 	private int p;
@@ -572,8 +571,8 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 		float x = (float)event.getX();
 		float y = (float) event.getY();
 		mapPixelToWallStack(x, y);
-		Point p = mapPixelToSquare(x, y);
-		Point q = mapPixeltoIntersections(x,y); 
+		QDPoint p = mapPixelToSquare(x, y);
+		QDPoint q = mapPixeltoIntersections(x,y); 
 
 		// if the location did not map to a legal square, flash
 		// the screen; otherwise, create and send an action to
@@ -602,13 +601,13 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 
 	// x- and y-percentage-coordinates for a polygon that displays the X's
 	// first slash
-	private static float[] xPoints1 = { 6.25f, 12.5f, 87.5f, 93.75f };
-	private static float[] yPoints1 = { 12.5f, 6.25f, 93.75f, 87.5f };
+	private static float[] xQDPoints1 = { 6.25f, 12.5f, 87.5f, 93.75f };
+	private static float[] yQDPoints1 = { 12.5f, 6.25f, 93.75f, 87.5f };
 
 	// x- and y-percentage-coordinates for a polygon that displays the X's
 	// second slash
-	private static float[] xPoints2 = { 87.5f, 6.25f, 93.75f, 12.5f };
-	private static float[] yPoints2 = { 6.25f, 87.5f, 12.5f, 93.75f };
+	private static float[] xQDPoints2 = { 87.5f, 6.25f, 93.75f, 12.5f };
+	private static float[] yQDPoints2 = { 6.25f, 87.5f, 12.5f, 93.75f };
 
 	/**
 	 * Draw a symbol (X or O) on the canvas in a particular location
@@ -655,13 +654,13 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 			translateMatrix.setTranslate(h(xLoc), v(yLoc));
 
 			// create the Path object for the X's first slash; move and draw it
-			Path pth = createPoly(xPoints1, yPoints1, fullSquare
+			Path pth = createPoly(xQDPoints1, yQDPoints1, fullSquare
 					* SQUARE_SIZE_PERCENT / 100);
 			pth.transform(translateMatrix);
 			g.drawPath(pth, p);
 
 			// create the Path object for the X's second slash; move and draw it
-			pth = createPoly(xPoints2, yPoints2, fullSquare
+			pth = createPoly(xQDPoints2, yQDPoints2, fullSquare
 					* SQUARE_SIZE_PERCENT / 100);
 			pth.transform(translateMatrix);
 			g.drawPath(pth, p);
@@ -676,27 +675,27 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 	 * 
 	 * helper-method to create a scaled polygon (Path) object from a list of points
 	 * 
-	 * @param xPoints
+	 * @param xQDPoints
 	 * 		list of x-coordinates, taken as percentages
-	 * @param yPoints
-	 * 		corresponding list of y-coordinates--should have the same length as xPoints
+	 * @param yQDPoints
+	 * 		corresponding list of y-coordinates--should have the same length as xQDPoints
 	 * @param scale
 	 * 		factor by which to scale them
 	 * @return
 	 */
-	private Path createPoly(float[] xPoints, float[] yPoints, float scale) {
+	private Path createPoly(float[] xQDPoints, float[] yQDPoints, float scale) {
 
 		// in case array-lengths are different, take the minimim length, to avoid
 		// array-out-of-bounds errors
-		int count = Math.min(xPoints.length, yPoints.length);
+		int count = Math.min(xQDPoints.length, yQDPoints.length);
 
 		// run through the points, adding each to the Path object, scaling as we go
 		Path rtnVal = new Path();
-		rtnVal.moveTo(xPoints[0] * scale / 100, yPoints[0] * scale / 100);
+		rtnVal.moveTo(xQDPoints[0] * scale / 100, yQDPoints[0] * scale / 100);
 		for (int i = 1; i < count; i++) {
-			float xPoint = xPoints[i] * scale / 100;
-			float yPoint = yPoints[i] * scale / 100;
-			rtnVal.lineTo(xPoint, yPoint);
+			float xQDPoint = xQDPoints[i] * scale / 100;
+			float yQDPoint = yQDPoints[i] * scale / 100;
+			rtnVal.lineTo(xQDPoint, yQDPoint);
 		}
 
 		// close the Path into a polygon; return the object
@@ -712,14 +711,14 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 	 * @param y
 	 * 		the y pixel-coordinate
 	 * @return
-	 *		a Point whose components are in the range 0-2, indicating the
+	 *		a QDPoint whose components are in the range 0-2, indicating the
 	 *		column and row of the corresponding square on the tic-tac-toe
 	 * 		board, or null if the point does not correspond to a square
 	 */
-	//		public Point mapPixelToSquare(int x, int y) {
+	//		public QDPoint mapPixelToSquare(int x, int y) {
 	//
 	//			// loop through each square and see if we get a "hit"; if so, return
-	//			// the corresponding Point in "square" coordinates
+	//			// the corresponding QDPoint in "square" coordinates
 	//			for (int i = 0; i < 9; i++) {
 	//				for (int j = 0; j < 9; j++) {
 	//					float left = h((i * pieceLength));
@@ -729,7 +728,7 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 	//					float bottom = v(pieceLength
 	//							+ (j * pieceSize));
 	//					if ((x > left) != (x > right) && (y > top) != (y > bottom)) {
-	//						return new Point(i, j);
+	//						return new QDPoint(i, j);
 	//					}
 	//				}
 	//			}
@@ -770,7 +769,7 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 		return wallMode;
 	}
 
-	public Point mapPixeltoIntersections(float x, float y){
+	public QDPoint mapPixeltoIntersections(float x, float y){
 
 		int width = pieceSize * boardSize - margin; 
 
@@ -781,7 +780,7 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 				for (int j = 0; j < boardSize; j++){
 					//check within y boundaries 
 					if (y >= (pieceSize * (j +1) - (3 *margin)) && y <= pieceSize * (j+1) + margin + (3 *margin)){
-						Point p = new Point(i, j); 
+						QDPoint p = new QDPoint(i, j); 
 						return p; 
 					}
 				}
@@ -791,7 +790,7 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 	}
 
 	@SuppressWarnings("null")
-	public Point mapPixelToSquare(float x, float y) 
+	public QDPoint mapPixelToSquare(float x, float y) 
 	{
 		//number of tiles drawn based from square width
 		//int tileSides = (sides - (MainActivity.width - 1) * margin)/MainActivity.width;
@@ -820,7 +819,7 @@ public class QDHumanPlayer1 extends QDHumanPlayer implements Animator {
 						//}
 						//test by changing square to 0, which should turn it black when surface.invalidate is called
 						//model.setTiles(i, j, 0);
-						Point p = new Point(i, j);
+						QDPoint p = new QDPoint(i, j);
 						//p.x = i;
 						//p.y = j;
 						return p;

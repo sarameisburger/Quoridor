@@ -1,6 +1,5 @@
 package edu.up.cs301.quoridor;
 
-import android.graphics.Point;
 import edu.up.cs301.game.infoMsg.GameInfo;
 import edu.up.cs301.game.infoMsg.NotYourTurnInfo;
 import edu.up.cs301.quoridor.QDState;
@@ -19,7 +18,7 @@ public class QDComputerPlayer1 extends QDComputerPlayer
 {
 
 	protected QDState state; 
-	protected Point[] moves; 
+	protected QDPoint[] moves; 
 	/*
 	 * Constructor for the TTTComputerPlayer1 class
 	 */
