@@ -54,7 +54,7 @@ public class QDComputerPlayer2 extends QDComputerPlayer
 		//otherwise, ComputearPlayer1's turn, so needs to make a move
 
 		//make it look like we're thinking
-		
+
 		int opponent; 
 		sleep(1000);
 
@@ -74,7 +74,7 @@ public class QDComputerPlayer2 extends QDComputerPlayer
 		//check if pawn or wall
 		if(piece == 0) {
 			//randomly choose any intersection
-			if (state.getPawns().length > 0) //getPawns.length == 2){
+			if (state.getPawns().length > 0) {//getPawns.length == 2){
 				opponent = (int)(Math.random() * state.getPawns().length);
 				while (opponent == playerNum)
 				{
@@ -82,48 +82,50 @@ public class QDComputerPlayer2 extends QDComputerPlayer
 
 				}
 			}
-		
-			int x = (int)(Math.random()*8);
-			int y = (int)(Math.random()*8);
+	
 
-			//randomly choose an orientation
-			int ori = (int)(Math.random() * 2);
-			//if 0, vertical
-			if (ori == 0) { ori = QDState.VERTICAL;}
-			else {ori = QDState.HORIZONTAL;}
 
-			//create place wall action and send it to the state
-			//QDLocalGame.makeMove(new QDMoveWallAction(this, x, y, ori));
-			game.sendAction(new QDMoveWallAction(this, x, y, ori));
+		int x = (int)(Math.random()*8);
+		int y = (int)(Math.random()*8);
 
-			//now, send the action to see if it goes through
+		//randomly choose an orientation
+		int ori = (int)(Math.random() * 2);
+		//if 0, vertical
+		if (ori == 0) { ori = QDState.VERTICAL;}
+		else {ori = QDState.HORIZONTAL;}
+
+		//create place wall action and send it to the state
+		//QDLocalGame.makeMove(new QDMoveWallAction(this, x, y, ori));
+		game.sendAction(new QDMoveWallAction(this, x, y, ori));
+
+		//now, send the action to see if it goes through
 		} else {
-			//move pawn instead
-			//first, get the legal moves from the state
-			this.state = (QDState) info;
-			moves = state.legalPawnMoves(1); //???
+		//move pawn instead
+		//first, get the legal moves from the state
+		this.state = (QDState) info;
+		moves = state.legalPawnMoves(1); //???
 
-			//randomly pick a valid move
-			if(moves != null)
-			{
-				int i = (int)(Math.random() * (moves.length));
-				game.sendAction(new QDMovePawnAction(this, moves[i].x, moves[i].y));
-			} else {
-				return;
-			}
+		//randomly pick a valid move
+		if(moves != null)
+		{
+			int i = (int)(Math.random() * (moves.length));
+			game.sendAction(new QDMovePawnAction(this, moves[i].x, moves[i].y));
+		} else {
+			return;
 		}
 	}
+}
 
-	//=======
-	// Submit our move to the game object. We haven't even checked it it's
-	// our turn, or that that position is unoccupied. If it was not our turn,
-	// we'll get a message back that we'll ignore. If it was an illegal move,
-	// we'll end up here again (and possibly again, and again). At some point,
-	// we'll end up randomly pick a move that is legal.
-	//		game.sendAction(new QDMovePawnAction(this, yVal, xVal));
-	//
-	//	}
-	//
-	//}
-	//>>>>>>> origin/master
+//=======
+// Submit our move to the game object. We haven't even checked it it's
+// our turn, or that that position is unoccupied. If it was not our turn,
+// we'll get a message back that we'll ignore. If it was an illegal move,
+// we'll end up here again (and possibly again, and again). At some point,
+// we'll end up randomly pick a move that is legal.
+//		game.sendAction(new QDMovePawnAction(this, yVal, xVal));
+//
+//	}
+//
+//}
+//>>>>>>> origin/master
 }
