@@ -77,11 +77,9 @@ public class QDComputerPlayer2 extends QDComputerPlayer
 	@Override
 	protected void receiveInfo(GameInfo info) {
 
-		pawns = state.getPawns(); 
-
 		// if it was a "not your turn" message, just ignore it
 		if (info instanceof NotYourTurnInfo) return;
-
+		this.state = (QDState) info;
 		//otherwise, ComputearPlayer1's turn, so needs to make a move
 
 		//make it look like we're thinking
@@ -89,7 +87,10 @@ public class QDComputerPlayer2 extends QDComputerPlayer
 		int opponent; 
 		sleep(1000);
 
-
+		if(state.getPawns() != null)
+		{
+			pawns = state.getPawns();
+		}
 		moves = state.legalPawnMoves(playerNum);
 
 		//check if we are about to win - if so, win
@@ -124,12 +125,12 @@ public class QDComputerPlayer2 extends QDComputerPlayer
 		}
 
 		//check if someone else about to win, and block them in order of whose turn is next
-		for (int i = playerNum + 1; i < state.getPawns().length; i++){
-			if (i == state.getPawns().length - 1 ){ //to iterate through everyone
-				i = -1; 
-			} else if (i == playerNum - 1){ //we don't ever want to check ourselves
-				i = state.getPawns().length;
-			}
+		int counter = 0;
+		for (int i = playerNum; i < state.getPawns().length; i++){
+			counter++;
+			if(i == playerNum) i++;
+			if (i == state.getPawns().length ) i = 0; 
+			
 			
 			if (i == 0){
 				if (pawns[i].y - 1 == 0){
@@ -152,6 +153,7 @@ public class QDComputerPlayer2 extends QDComputerPlayer
 					placeBlockingWall(i);
 				}
 			}
+			if (counter > state.getPawns().length) i = 5;
 		}
 
 		// otherwise randomly place pawn or wall
