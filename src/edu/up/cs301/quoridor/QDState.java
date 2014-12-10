@@ -1,5 +1,6 @@
 package edu.up.cs301.quoridor;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -16,9 +17,10 @@ import edu.up.cs301.game.infoMsg.GameState;
  * @author Steven R. Vegdahl 
  * @version July 2013
  */
-public class QDState extends GameState
+public class QDState extends GameState implements Serializable
 {
-	private static final long serialVersionUID = 7552321013488624386L;
+
+	private static final long serialVersionUID = -2357557756794216401L;
 
 	///////////////////////////////////////////////////
 	// ************** instance variables ************
@@ -41,8 +43,6 @@ public class QDState extends GameState
 	// an int that tells whose move it is
 	private int playerToMove;
 
-	// players
-	private GamePlayer[] players;
 
 	// Legal pawn moves per player, not safe
 	// to directly access. Don't do it.
